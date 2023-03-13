@@ -2,8 +2,7 @@ set_global_assignment -name SDC_FILE NextSpace.sdc
 set_global_assignment -name SYSTEMVERILOG_FILE NextSpace.sv
 set_global_assignment -name QIP_FILE rtl/t80/T80.qip
 set_global_assignment -name QIP_FILE rtl/fx68k/fx68k.qip
-set_global_assignment -name QIP_FILE rtl/jtopl/jt2413.qip
-set_global_assignment -name QIP_FILE rtl/jt12/jt03.qip
+set_global_assignment -name QIP_FILE rtl/jtopl/jt26.qip
 set_global_assignment -name VERILOG_FILE rtl/video_timing.v
 set_global_assignment -name QIP_FILE sys/pll_q17.qip
 set_global_assignment -name QIP_FILE sys/pll_hdmi.qip

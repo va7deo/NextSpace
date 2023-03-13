@@ -832,7 +832,6 @@ always @ (posedge clk_sys) begin
                 
         z80_latch <= 0;        
         z80_nmi_n <= 1 ;
-        z80_nmi_suppress <= 1; // ym2203 port high impedance on reset?
         
         coin_latch <= 0;
     end else begin
@@ -872,8 +871,9 @@ always @ (posedge clk_sys) begin
                 // writes
             
                 if ( m68k_latch_cs == 1 ) begin
-                    if ( m68k_lds_n == 0 ) begin // LDS 0x80001
-                        m68k_latch <= m68k_dout[7:0]; 
+                    if ( m68k_lds_n == 0 ) begin // LDS 0x0f0009
+                        m68k_latch <= m68k_dout[7:0];
+                        z80_nmi_n <= 0 ;  // trigger nmi
                     end
                 end
                 
@@ -881,33 +881,80 @@ always @ (posedge clk_sys) begin
         end
         
         if ( clk_6M == 1 ) begin
-
+//    .RD_n       ( z80_rd_n ),
+//    .WR_n       ( z80_wr_n ),
+        
             z80_wait_n <= 1;
+            
+            // reset
+            z80_nmi_n <= 1 ;
             
             if ( z80_rd_n == 0 ) begin
                 if ( z80_ram_cs == 1 ) begin
                     z80_din <= z80_ram_data ;
+                end else if ( z80_latch_cs == 1 ) begin
+                    // latch may get cleared before used
+                    z80_latch <= m68k_latch;
                 end else if ( z80_rom_cs == 1 ) begin
                     z80_din <= z80_rom_data ;
                 end  
             end
            
-            // WRITE
-
-            opl_wr <= 0 ;
-            
-            if ( z80_opl_addr_cs == 1 ) begin   
-            end 
-
-            if ( z80_opl_data_cs == 1 ) begin   
-            end 
-        end
-
-        // nmi disabled
-        z80_nmi_n <= 1 ;        
+            if ( z80_wr_n == 0 ) begin
+                // WRITE
+                if ( z80_latch_cs == 1 ) begin
+                    // tell the 68k that the z80 has the data
+                    m68k_latch <= 0;
+                end
+            end
         
+            if ( z80_opl_addr_cs == 1 || z80_opl_data_cs == 1) begin    
+                opl_data <= z80_dout;
+                opl_addr <= z80_opl_data_cs ; //   opl2 is single bit address
+                opl_wr <= 1;                
+            end
+    
+        end
     end
 end 
+
+reg        opl_wr;
+
+reg        opl_addr ;
+reg  [7:0] opl_data ;
+wire [7:0] opl_dout ;
+
+// sound ic write enable
+
+reg signed [15:0] opl_sample;
+
+assign AUDIO_S = 1'b1 ;
+
+wire opl_sample_clk;
+
+reg  signed  [7:0] dac ;
+wire signed [15:0] dac_sample = { ~dac[7], dac[6:0], 8'h0 } ;
+
+always @ * begin
+    // mix audio
+    AUDIO_L <= opl_sample ; 
+    AUDIO_R <= opl_sample ;
+end
+
+jtopl #(.OPL_TYPE(2)) opl
+(
+    .rst(reset),
+    .clk(clk_4M),
+    .cen(1'b1),
+    .din(opl_data),
+    .addr(opl_addr),
+    .cs_n(~( z80_opl_addr_cs | z80_opl_data_cs )),
+    .wr_n(~opl_wr),
+    .dout(opl_dout),
+    .irq_n( ),  // timer not used
+    .snd(opl_sample),
+    .sample(opl_sample_clk)
+);
  
 wire    m68k_rom_cs;
 wire    m68k_ram_cs;
@@ -924,6 +971,7 @@ wire    z80_rom_cs;
 wire    z80_ram_cs;
 wire    z80_opl_addr_cs;
 wire    z80_opl_data_cs;
+wire    z80_latch_cs;
   
 chip_select cs (
     .clk(clk_sys),
@@ -966,6 +1014,8 @@ chip_select cs (
 
     .z80_rom_cs,
     .z80_ram_cs,
+    
+    .z80_latch_cs,
     
     .z80_opl_addr_cs,
     .z80_opl_data_cs
@@ -1058,8 +1108,6 @@ fx68k fx68k (
 
 // z80 audio 
 wire    [7:0] z80_rom_data;
-wire    [7:0] z80_rom_2_data;
-wire    [7:0] z80_banked_data;
 wire    [7:0] z80_ram_data;
 
 wire   [15:0] z80_addr;
@@ -1105,31 +1153,8 @@ T80pa z80 (
     .REG        ()
 );
 
-reg opl_wait ;
-reg z80_nmi_suppress;
 
-reg     io_port_a_wr ;
 
-reg        opl_wr;
-reg        opl_addr ;
-reg  [7:0] opl_data ;
-
-// sound ic write enable
-
-reg signed [15:0] opl_sample;
-
-assign AUDIO_S = 1'b1 ;
-
-wire opl_sample_clk;
-
-reg  signed  [7:0] dac ;
-wire signed [15:0] dac_sample = { ~dac[7], dac[6:0], 8'h0 } ;
-
-always @ * begin
-    // mix audio
-    AUDIO_L <= opl_sample ; 
-    AUDIO_R <= opl_sample ;
-end
 
 reg [16:0] gfx1_addr;
 reg  [7:0] gfx1_dout;
@@ -1141,7 +1166,7 @@ wire [15:0] m68k_pal_dout;
 // ioctl download addressing    
 wire rom_download = ioctl_download && (ioctl_index==0);
 
-wire z80_ioctl_wr            = rom_download & ioctl_wr & (ioctl_addr >= 24'h100000) & (ioctl_addr < 24'h100000) ;
+wire z80_ioctl_wr            = rom_download & ioctl_wr & (ioctl_addr >= 24'h100000) & (ioctl_addr < 24'h110000) ;
 
 // c_prom - start 0xd0000 - len 0x8000 -->
 wire tile_colours_ioctl_wr   = rom_download & ioctl_wr & (ioctl_addr >= 24'h110000) & (ioctl_addr < 24'h118000) ;
@@ -1330,10 +1355,6 @@ dual_port_ram #(.LEN(2048)) z80_ram (
     .q_b ( z80_ram_data )
     );
     
-   
-wire [15:0] spr_pal_dout ;
-wire [15:0] m68k_spr_pal_dout ;
-   
 reg   [9:0]  line_buf_addr_r ; 
 
 reg   [9:0]  spr_buf_addr_w;
