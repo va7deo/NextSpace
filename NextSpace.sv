@@ -333,8 +333,8 @@ always @ (posedge clk_sys ) begin
         p1   <=  16'hffff; // { start1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up} ;
         p2   <=  16'hffff; // { start2, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up} ;
         
-        dsw1_m68k <=  16'h00bf; // ~{sw[0][7:2], ~key_test, ~key_service};  
-        dsw2_m68k <=  16'h00ff;
+        dsw1_m68k <= { 8'hff, sw[0] }; // ~{sw[0][7:2], ~key_test, ~key_service};  
+        dsw2_m68k <= { 8'hff, sw[1] };
     end
     
 //    coin <=  { 2'b0, coin_b, coin_a, 2'b0, key_test, key_service } ;
@@ -458,14 +458,14 @@ reg  [7:0] clk4_count;
 always @ (posedge clk_sys) begin
 
     clk_4M <= ( clk4_count == 0 );
-    if ( clk4_count == 11 ) begin // 11
+    if ( clk4_count == 17 ) begin 
         clk4_count <= 0;
     end else begin
         clk4_count <= clk4_count + 1;
     end
     
     clk_6M <= ( clk6_count == 0 );
-    if ( clk6_count == 11 ) begin // 11
+    if ( clk6_count == 11 ) begin 
         clk6_count <= 0;
     end else begin
         clk6_count <= clk6_count + 1;
@@ -814,9 +814,6 @@ reg [7:0] tile_bank;
 reg [1:0] vbl_sr;
 reg [1:0] hbl_sr;
 
-reg [3:0] coin_count;
-reg [1:0] coin_latch;
-
 /// 68k cpu
 always @ (posedge clk_sys) begin
 
@@ -826,14 +823,9 @@ always @ (posedge clk_sys) begin
         m68k_ipl0_n <= 1 ;
         m68k_ipl1_n <= 1 ;
         
-        z80_irq_n <= 1 ;
-        m68k_latch <= 0;
-        tile_bank <= 0;
-                
-        z80_latch <= 0;        
         z80_nmi_n <= 1 ;
-        
-        coin_latch <= 0;
+
+        m68k_latch <= 0;
     end else begin
     
         // vblank handling 
@@ -880,21 +872,22 @@ always @ (posedge clk_sys) begin
             end 
         end
         
-        if ( clk_6M == 1 ) begin
-//    .RD_n       ( z80_rd_n ),
-//    .WR_n       ( z80_wr_n ),
-        
+        if ( clk_4M == 1 ) begin
+       
             z80_wait_n <= 1;
-            
+           
             // reset
-            z80_nmi_n <= 1 ;
+            if ( M1_n == 0 ) begin
+                // for interrupt ack
+                z80_nmi_n <= 1 ;
+            end
             
             if ( z80_rd_n == 0 ) begin
                 if ( z80_ram_cs == 1 ) begin
                     z80_din <= z80_ram_data ;
                 end else if ( z80_latch_cs == 1 ) begin
                     // latch may get cleared before used
-                    z80_latch <= m68k_latch;
+                    z80_din <= m68k_latch;
                 end else if ( z80_rom_cs == 1 ) begin
                     z80_din <= z80_rom_data ;
                 end  
@@ -930,7 +923,7 @@ reg signed [15:0] opl_sample;
 
 assign AUDIO_S = 1'b1 ;
 
-wire opl_sample_clk;
+wire opl_sample_clk ;
 
 reg  signed  [7:0] dac ;
 wire signed [15:0] dac_sample = { ~dac[7], dac[6:0], 8'h0 } ;
@@ -951,7 +944,7 @@ jtopl #(.OPL_TYPE(2)) opl
     .cs_n(~( z80_opl_addr_cs | z80_opl_data_cs )),
     .wr_n(~opl_wr),
     .dout(opl_dout),
-    .irq_n( ),  // timer not used
+    .irq_n( z80_irq_n ),  
     .snd(opl_sample),
     .sample(opl_sample_clk)
 );
@@ -1022,7 +1015,7 @@ chip_select cs (
 
 );
  
-reg [7:0]  z80_latch;
+//reg [7:0]  z80_latch;
 reg [7:0]  m68k_latch;
 
 // CPU outputs
@@ -1128,10 +1121,10 @@ wire M1_n;
 T80pa z80 (
     .RESET_n    ( ~reset ),
     .CLK        ( clk_sys ),
-    .CEN_p      ( clk_6M ),
-    .CEN_n      ( ~clk_6M ),
+    .CEN_p      ( clk_4M ),
+    .CEN_n      ( ~clk_4M ),
     .WAIT_n     ( z80_wait_n ), // z80_wait_n
-    .INT_n      ( 1'b1 ),  
+    .INT_n      ( z80_irq_n ),  
     .NMI_n      ( z80_nmi_n ),
     .BUSRQ_n    ( 1'b1 ),
     .RD_n       ( z80_rd_n ),

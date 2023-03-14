@@ -119,8 +119,8 @@ always @ (*) begin
             z80_ram_cs        <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hf000 && z80_addr[15:0] < 16'hf800 );
             z80_latch_cs      <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hf800 );
             
-            z80_opl_addr_cs   <= ( z80_addr == 8'h00 ) && ( !IORQ_n ) && (!WR_n); 
-            z80_opl_data_cs   <= ( z80_addr == 8'h20 ) && ( !IORQ_n ) && (!WR_n); 
+            z80_opl_addr_cs   <= ( z80_addr[7:0] == 8'h00 ) && ( !IORQ_n ) && (!WR_n); 
+            z80_opl_data_cs   <= ( z80_addr[7:0] == 8'h20 ) && ( !IORQ_n ) && (!WR_n); 
         end
     endcase
 
