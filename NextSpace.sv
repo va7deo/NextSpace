@@ -322,16 +322,16 @@ reg [15:0] p1;
 reg [15:0] p2;
 reg [15:0] dsw1_m68k;
 reg [15:0] dsw2_m68k;
-reg [7:0] coin;
+reg [15:0] coin;
 
 always @ (posedge clk_sys ) begin
-    p1   <=  ~{ start1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up};
-    p2   <=  ~{ start2, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up};
+    p1   <=  ~{ start1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
+    p2   <=  ~{ start2, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up };
 
-    dsw1_m68k <= { 8'hff, sw[0]};
-    dsw2_m68k <= { 8'hff, sw[1]};
+    dsw1_m68k <= { 8'hff, sw[0] };
+    dsw2_m68k <= { 8'hff, sw[1] };
 
-    coin <=  ~{ 5'b0, key_service, coin_b, coin_a};
+    coin <=  ~{ 13'b1, key_service, coin_b, coin_a };
 end
 
 wire        p1_right;
@@ -845,6 +845,7 @@ always @ (posedge clk_sys) begin
                              m68k_p2_cs ? p2 :
                              m68k_dsw1_cs ? dsw1_m68k :
                              m68k_dsw2_cs ? dsw2_m68k :
+                             m68k_coin_cs ? coin :
                              m68k_sound_cs ? 16'h0001 :
                              16'h0000;
             end else begin        
@@ -944,6 +945,7 @@ wire    m68k_dsw1_cs;
 wire    m68k_dsw2_cs;
 wire    m68k_p1_cs;
 wire    m68k_p2_cs;
+wire    m68k_coin_cs;
 wire    m68k_sound_cs;
 
 wire    m68k_latch_cs;
@@ -978,6 +980,7 @@ chip_select cs (
 
     .m68k_p1_cs,
     .m68k_p2_cs,
+    .m68k_coin_cs,
     
     .m68k_dsw1_cs,
     .m68k_dsw2_cs,

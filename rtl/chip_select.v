@@ -23,6 +23,7 @@ module chip_select
 
     output reg m68k_p1_cs,
     output reg m68k_p2_cs,
+    output reg m68k_coin_cs,
     output reg m68k_dsw1_cs,
     output reg m68k_dsw2_cs,
 
@@ -106,6 +107,7 @@ always @ (*) begin
             
             m68k_p1_cs      <= m68k_cs( 24'h0e0000, 24'h0e0001 ) & m68k_rw ;
             m68k_p2_cs      <= m68k_cs( 24'h0e0002, 24'h0e0003 ) & m68k_rw ;
+            m68k_coin_cs    <= m68k_cs( 24'h0e0004, 24'h0e0005 ) & m68k_rw ;
             
             m68k_dsw1_cs     <= m68k_cs( 24'h0e0008, 24'h0e0009 ) ;
             m68k_dsw2_cs     <= m68k_cs( 24'h0e000a, 24'h0e000b ) ;
