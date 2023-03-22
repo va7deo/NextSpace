@@ -204,7 +204,7 @@ assign m68k_a[0] = 0;
 // 0         1         2         3          4         5         6   
 // 01234567890123456789012345678901 23456789012345678901234567890123
 // 0123456789ABCDEFGHIJKLMNOPQRSTUV 0123456789ABCDEFGHIJKLMNOPQRSTUV
-// X   XXXXXX        XXXXX XXXXXXXX      XX                         
+// X   XXXXXX        XXXXX XXXXXXXX       X                 XXXXXXXX
 
 wire [1:0]  aspect_ratio = status[9:8];
 wire        orientation = ~status[3];
@@ -214,8 +214,6 @@ wire [3:0]  hs_offset = status[27:24];
 wire [3:0]  vs_offset = status[31:28];
 wire [3:0]  hs_width  = status[59:56];
 wire [3:0]  vs_width  = status[63:60];
-
-wire kill_laugh = status[37];
 
 assign VIDEO_ARX = (!aspect_ratio) ? (orientation  ? 8'd8 : 8'd7) : (aspect_ratio - 1'd1);
 assign VIDEO_ARY = (!aspect_ratio) ? (orientation  ? 8'd7 : 8'd8) : 12'd0;
@@ -261,7 +259,7 @@ wire forced_scandoubler = hps_forced_scandoubler | status[10];
 wire  [1:0] buttons;
 wire [63:0] status;
 wire [10:0] ps2_key;
-wire [15:0] joy0, joy1, joy2, joy3;
+wire [15:0] joy0, joy1;
 
 hps_io #(.CONF_STR(CONF_STR)) hps_io
 (
@@ -287,9 +285,7 @@ hps_io #(.CONF_STR(CONF_STR)) hps_io
     .ioctl_wait(ioctl_wait),
 
     .joystick_0(joy0),
-    .joystick_1(joy1),
-    .joystick_2(joy2),
-    .joystick_3(joy3)
+    .joystick_1(joy1)
 );
 
 // INPUT
@@ -330,13 +326,13 @@ reg [15:0] dsw2_m68k;
 always @ (posedge clk_sys ) begin
     if ( pcb == NEXTSPACE ) begin
 
-        p1   <=  16'hffff; // { start1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up} ;
-        p2   <=  16'hffff; // { start2, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up} ;
-        
-        dsw1_m68k <= { 8'hff, sw[0] }; // ~{sw[0][7:2], ~key_test, ~key_service};  
+        p1   <=  ~{ start1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up} ;
+        p2   <=  ~{ start2, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up} ;
+
+        dsw1_m68k <= { 8'hff, sw[0] }; // ~{sw[0][7:2], ~key_test, ~key_service};
         dsw2_m68k <= { 8'hff, sw[1] };
     end
-    
+
 //    coin <=  { 2'b0, coin_b, coin_a, 2'b0, key_test, key_service } ;
 end
 
@@ -421,9 +417,6 @@ always @(posedge clk_sys) begin
             'h01b: key_p2_b       <= pressed; // s
             'h015: key_p2_c       <= pressed; // q
             'h01d: key_p2_d       <= pressed; // w
-
-            'h026: key_start_3p   <= pressed; // 3
-            'h025: key_start_4p   <= pressed; // 4
 
         endcase
     end
