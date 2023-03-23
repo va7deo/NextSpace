@@ -658,18 +658,11 @@ always @ (posedge clk_sys) begin
             // x/y data valid
             
             sprite_col_x <= sprite_ram_dout[7:0] ;
-            sprite_col_y <= 8'h01 - sprite_ram_dout[15:8] ; 
+            // sprite_col_y <= 8'h01 - sprite_ram_dout[15:8] ; 
+            sprite_col_y <= ( flip_dip ? 8'hff : 8'h01 ) - sprite_ram_dout[15:8] ;
             
             sprite_state <= 4;
         end else if ( sprite_state == 4 )  begin   
-            
-//            if ( sprite_layer == 0 ) begin
-//                if ( flip_dip == 0 ) begin
-//                    sprite_col_y <= sprite_col_y - 1 ;
-//                end else begin
-//                    sprite_col_y <= sprite_col_y + 1 ;
-//                end
-//            end
             sprite_state <= 5;
         end else if ( sprite_state == 5 )  begin
             // tile ofset from the top of the column
