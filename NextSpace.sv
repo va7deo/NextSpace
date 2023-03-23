@@ -322,7 +322,7 @@ reg [15:0] p1;
 reg [15:0] p2;
 reg [15:0] dsw1_m68k;
 reg [15:0] dsw2_m68k;
-reg [7:0] coin;
+reg [15:0] coin;
 
 always @ (posedge clk_sys ) begin
     p1   <=  ~{ start1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up};
@@ -331,7 +331,7 @@ always @ (posedge clk_sys ) begin
     dsw1_m68k <= { 8'hff, sw[0]};
     dsw2_m68k <= { 8'hff, sw[1]};
 
-    coin <=  ~{ 5'b0, key_service, coin_b, coin_a};
+    coin <=  ~{ 13'b1, key_service, coin_b, coin_a};
 end
 
 wire        p1_right;
@@ -416,8 +416,6 @@ always @(posedge clk_sys) begin
         endcase
     end
 end
-
-reg user_flip;
 
 wire pll_locked;
 
@@ -583,7 +581,7 @@ reg  [15:0] spr_pix_data;
 
 reg   [8:0] x;
 
-wire flip_dip = 0;
+wire flip_dip = 1;
 
 wire  [8:0] sp_x    = x ;
 wire  [8:0] sp_y    = vc ^ { 8 { flip_dip } };
@@ -845,6 +843,7 @@ always @ (posedge clk_sys) begin
                              m68k_p2_cs ? p2 :
                              m68k_dsw1_cs ? dsw1_m68k :
                              m68k_dsw2_cs ? dsw2_m68k :
+                             m68k_coin_cs ? coin :
                              m68k_sound_cs ? 16'h0001 :
                              16'h0000;
             end else begin        
@@ -863,7 +862,8 @@ always @ (posedge clk_sys) begin
         if ( clk_4M == 1 ) begin
        
             z80_wait_n <= 1;
-           
+            opl_wr <= 0; 
+            
             // reset
             if ( M1_n == 0 ) begin
                 // for interrupt ack
@@ -878,7 +878,9 @@ always @ (posedge clk_sys) begin
                     z80_din <= m68k_latch;
                 end else if ( z80_rom_cs == 1 ) begin
                     z80_din <= z80_rom_data ;
-                end  
+                end else if ( z80_opl_addr_cs == 1 ) begin
+                    z80_din <= opl_dout ;
+                end
             end
            
             if ( z80_wr_n == 0 ) begin
@@ -887,14 +889,13 @@ always @ (posedge clk_sys) begin
                     // tell the 68k that the z80 has the data
                     m68k_latch <= 0;
                 end
-            end
         
-            if ( z80_opl_addr_cs == 1 || z80_opl_data_cs == 1) begin    
-                opl_data <= z80_dout;
-                opl_addr <= z80_opl_data_cs ; //   opl2 is single bit address
-                opl_wr <= 1;                
+                if ( z80_opl_addr_cs == 1 || z80_opl_data_cs == 1) begin    
+                    opl_data <= z80_dout;
+                    opl_addr <= z80_opl_data_cs ; //   opl2 is single bit address
+                    opl_wr <= 1;                
+                end
             end
-    
         end
     end
 end 
@@ -945,6 +946,7 @@ wire    m68k_dsw2_cs;
 wire    m68k_p1_cs;
 wire    m68k_p2_cs;
 wire    m68k_sound_cs;
+wire    m68k_coin_cs;
 
 wire    m68k_latch_cs;
 
@@ -981,6 +983,7 @@ chip_select cs (
     
     .m68k_dsw1_cs,
     .m68k_dsw2_cs,
+    .m68k_coin_cs,
     
     .m68k_sound_cs,
 
@@ -1313,7 +1316,7 @@ dual_port_ram #(.LEN(1024)) colour_lut_rom (
 // sound cpu
 
 dual_port_ram #(.LEN(65536)) z80_rom (
-    .clock_a ( clk_6M ),
+    .clock_a ( clk_4M ),
     .address_a ( z80_addr[15:0] ),   
     .wren_a ( 1'b0 ),
     .data_a ( ),
@@ -1329,7 +1332,7 @@ dual_port_ram #(.LEN(65536)) z80_rom (
    
 // z80 ram 
 dual_port_ram #(.LEN(2048)) z80_ram (
-    .clock_b ( clk_6M ), 
+    .clock_b ( clk_4M ), 
     .address_b ( z80_addr[10:0] ),
     .wren_b ( z80_ram_cs & ~z80_wr_n ),
     .data_b ( z80_dout ),

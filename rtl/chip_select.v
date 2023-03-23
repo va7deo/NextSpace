@@ -25,6 +25,7 @@ module chip_select
     output reg m68k_p2_cs,
     output reg m68k_dsw1_cs,
     output reg m68k_dsw2_cs,
+    output reg m68k_coin_cs,
 
     output reg m68k_sound_cs,
 //    output reg vbl_int_clr_cs,
@@ -106,6 +107,7 @@ always @ (*) begin
             
             m68k_p1_cs      <= m68k_cs( 24'h0e0000, 24'h0e0001 ) & m68k_rw ;
             m68k_p2_cs      <= m68k_cs( 24'h0e0002, 24'h0e0003 ) & m68k_rw ;
+            m68k_coin_cs    <= m68k_cs( 24'h0e0004, 24'h0e0005 ) & m68k_rw ;
             
             m68k_dsw1_cs     <= m68k_cs( 24'h0e0008, 24'h0e0009 ) ;
             m68k_dsw2_cs     <= m68k_cs( 24'h0e000a, 24'h0e000b ) ;
@@ -117,9 +119,9 @@ always @ (*) begin
             
             z80_rom_cs        <= ( MREQ_n == 0 && z80_addr[15:0] <  16'hf000 );
             z80_ram_cs        <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hf000 && z80_addr[15:0] < 16'hf800 );
-            z80_latch_cs      <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hf800 );
+            z80_latch_cs      <= ( MREQ_n == 0 && z80_addr[15:0] == 16'hf800 );
             
-            z80_opl_addr_cs   <= ( z80_addr[7:0] == 8'h00 ) && ( !IORQ_n ) && (!WR_n); 
+            z80_opl_addr_cs   <= ( z80_addr[7:0] == 8'h00 ) && ( !IORQ_n ) ; 
             z80_opl_data_cs   <= ( z80_addr[7:0] == 8'h20 ) && ( !IORQ_n ) && (!WR_n); 
         end
     endcase
