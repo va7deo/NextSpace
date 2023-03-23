@@ -23,9 +23,9 @@ module chip_select
 
     output reg m68k_p1_cs,
     output reg m68k_p2_cs,
+    output reg m68k_coin_cs,
     output reg m68k_dsw1_cs,
     output reg m68k_dsw2_cs,
-    output reg m68k_coin_cs,
 
     output reg m68k_sound_cs,
 //    output reg vbl_int_clr_cs,
