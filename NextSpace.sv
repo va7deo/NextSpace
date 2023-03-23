@@ -696,7 +696,7 @@ always @ (posedge clk_sys) begin
             // tile_colour_rom_addr valid
 
             spr_x_ofs <= 0;
-            spr_x_pos <= sprite_col_x[7:0] + 1;
+            spr_x_pos <= sprite_col_x[7:0] ;//+ 1;
             sprite_state <= 18;
             
         end else if ( sprite_state == 18 )  begin       
