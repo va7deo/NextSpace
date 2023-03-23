@@ -581,7 +581,7 @@ reg  [15:0] spr_pix_data;
 
 reg   [8:0] x;
 
-wire flip_dip = 0;
+reg         flip_dip;
 
 wire  [8:0] sp_x    = x ;
 wire  [8:0] sp_y    = vc ^ { 8 { flip_dip } };
@@ -809,9 +809,10 @@ always @ (posedge clk_sys) begin
         m68k_ipl0_n <= 1 ;
         m68k_ipl1_n <= 1 ;
         
-        z80_nmi_n <= 1 ;
-
-        m68k_latch <= 0;
+        z80_nmi_n   <= 1 ;
+        flip_dip    <= 0 ;
+        m68k_latch  <= 0 ;
+        
     end else begin
     
         // vblank handling 
@@ -854,8 +855,9 @@ always @ (posedge clk_sys) begin
                         m68k_latch <= m68k_dout[7:0];
                         z80_nmi_n <= 0 ;  // trigger nmi
                     end
+                end else if ( m68k_flip_cs == 1 ) begin
+                    flip_dip <= m68k_dout[0];
                 end
-                
             end 
         end
         
@@ -947,7 +949,7 @@ wire    m68k_p1_cs;
 wire    m68k_p2_cs;
 wire    m68k_coin_cs;
 wire    m68k_sound_cs;
-
+wire    m68k_flip_cs;
 wire    m68k_latch_cs;
 
 wire    z80_rom_cs;
@@ -981,6 +983,7 @@ chip_select cs (
     .m68k_p1_cs,
     .m68k_p2_cs,
     .m68k_coin_cs,
+    .m68k_flip_cs,
     
     .m68k_dsw1_cs,
     .m68k_dsw2_cs,

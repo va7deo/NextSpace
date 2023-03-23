@@ -26,11 +26,9 @@ module chip_select
     output reg m68k_coin_cs,
     output reg m68k_dsw1_cs,
     output reg m68k_dsw2_cs,
+    output reg m68k_flip_cs,
 
     output reg m68k_sound_cs,
-//    output reg vbl_int_clr_cs,
-//    output reg cpu_int_clr_cs,
-//    output reg watchdog_clr_cs,
 
     output reg m68k_latch_cs,
 
@@ -112,9 +110,9 @@ always @ (*) begin
             m68k_dsw1_cs     <= m68k_cs( 24'h0e0008, 24'h0e0009 ) ;
             m68k_dsw2_cs     <= m68k_cs( 24'h0e000a, 24'h0e000b ) ;
             
-            //m68k_sound_cs    <= m68k_cs( 24'h0e0002, 24'h0e0003 ) & m68k_rw ;
             m68k_sound_cs    <= m68k_cs( 24'h0e0018, 24'h0e0019 ) & m68k_rw ;
             
+            m68k_flip_cs     <= m68k_cs( 24'h0f0000, 24'h0f0001 ) & !m68k_rw ;
             m68k_latch_cs    <= m68k_cs( 24'h0f0008, 24'h0f0009 ) & !m68k_rw ;
             
             z80_rom_cs        <= ( MREQ_n == 0 && z80_addr[15:0] <  16'hf000 );
