@@ -581,7 +581,7 @@ reg  [15:0] spr_pix_data;
 
 reg   [8:0] x;
 
-wire flip_dip = 1;
+wire flip_dip = 0;
 
 wire  [8:0] sp_x    = x ;
 wire  [8:0] sp_y    = vc ^ { 8 { flip_dip } };
@@ -696,7 +696,7 @@ always @ (posedge clk_sys) begin
             // tile_colour_rom_addr valid
 
             spr_x_ofs <= 0;
-            spr_x_pos <= sprite_col_x[7:0];
+            spr_x_pos <= sprite_col_x[7:0] + 1;
             sprite_state <= 18;
             
         end else if ( sprite_state == 18 )  begin       
