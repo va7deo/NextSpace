@@ -139,12 +139,12 @@ always @ (*) begin
             
             m68k_latch_cs    <= m68k_cs( 24'h380000, 24'h380001 ) & !m68k_rw ;
             
-            z80_rom_cs        <= ( MREQ_n == 0 && z80_addr[15:0] <  16'hf000 );
+            z80_rom_cs        <= ( MREQ_n == 0 && z80_addr[15:0] <  16'ha000 );
             z80_ram_cs        <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hf000 && z80_addr[15:0] < 16'hf800 );
             z80_latch_cs      <= ( MREQ_n == 0 && z80_addr[15:0] == 16'he000 );
             
-            z80_opl_addr_cs   <= ( z80_addr[7:0] == 8'he800 ) && ( !IORQ_n ) ; 
-            z80_opl_data_cs   <= ( z80_addr[7:0] == 8'hec00 ) && ( !IORQ_n ) && (!WR_n); 
+            z80_opl_addr_cs   <= ( z80_addr[7:0] == 16'he800 ) && ( !IORQ_n ) ; 
+            z80_opl_data_cs   <= ( z80_addr[7:0] == 16'hec00 ) && ( !IORQ_n ) && (!WR_n); 
         end
     endcase
 
