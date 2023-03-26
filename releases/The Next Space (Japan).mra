@@ -26,7 +26,7 @@
         <dip name="Service Mode" bits="15" ids="On,Off"/>
     </switches>
 
-    <buttons names="Shot,Item Shot,-,Start,Coin,Pause" default="Y,X,A,R,L,Start" count="2"/>
+    <buttons names="Shot,Item Shot,-,P1 Start,P2 Start,Coin A,Coin B,Pause" default="A,B,X,Y,R,L,Start"/>
 
     <rom index="0" zip="tnextspcj.zip|tnextspc.zip" md5="None">
         <!-- maincpu - starts at 0x0 -->
