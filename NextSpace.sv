@@ -314,6 +314,7 @@ reg   [3:0] pcb;
 reg   [7:0] cfg;
 
 localparam NEXTSPACE   = 0;
+localparam PADDLEMANIA = 1;
 
 wire [21:0] gamma_bus;
 
