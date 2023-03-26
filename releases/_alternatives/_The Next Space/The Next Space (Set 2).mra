@@ -26,7 +26,7 @@
         <dip name="Service Mode" bits="15" ids="On,Off"/>
     </switches>
 
-    <buttons names="Shot,Item Shot,-,Start,Coin,Pause" default="Y,X,A,R,L,Start" count="2"/>
+    <buttons names="Shot,Item Shot,-,P1 Start,P2 Start,Coin A,Coin B,Pause" default="A,B,X,Y,R,L,Start"/>
 
     <rom index="0" zip="tnextspc2.zip|tnextspc.zip" md5="None">
         <!-- maincpu - starts at 0x0 -->
@@ -38,20 +38,20 @@
 
         <!-- gfx1 - starts at 0x80000 -->
         <interleave output="16">
-            <part name="b7.ic53" crc="a8b13a9a" map="01"/>
-            <part name="b3.ic49" crc="2bddf94d" map="10"/>
+            <part name="b7.ic53" crc="a8b13a9a" map="10"/>
+            <part name="b3.ic49" crc="2bddf94d" map="01"/>
         </interleave>
         <interleave output="16">
-            <part name="b8.ic54" crc="bf0762a0" map="01"/>
-            <part name="b4.ic50" crc="80c6c841" map="10"/>
+            <part name="b8.ic54" crc="bf0762a0" map="10"/>
+            <part name="b4.ic50" crc="80c6c841" map="01"/>
         </interleave>
         <interleave output="16">
-            <part name="b9.ic55" crc="45d730b9" map="01"/>
-            <part name="b5.ic51" crc="e487750b" map="10"/>
+            <part name="b9.ic55" crc="45d730b9" map="10"/>
+            <part name="b5.ic51" crc="e487750b" map="01"/>
         </interleave>
         <interleave output="16">
-            <part name="b10.ic56" crc="f48819df" map="01"/>
-            <part name="b6.ic52" crc="0618cf49" map="10"/>
+            <part name="b10.ic56" crc="f48819df" map="10"/>
+            <part name="b6.ic52" crc="0618cf49" map="01"/>
         </interleave>
 
         <!-- audiocpu - starts at 0x100000 -->

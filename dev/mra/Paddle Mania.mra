@@ -26,7 +26,7 @@
         <dip name="Allow Continue" bits="15" ids="Yes,No"/>
     </switches>
 
-    <buttons names="B1,B2,Start,Coin,Pause" default="Y,X,R,L,Start" count="2"/>
+    <buttons names="Left Swing,Right Swing,-,P1 Start,P2 Start,Coin A,Coin B,Pause" default="A,B,X,Y,R,L,Start"/>
 
     <rom index="1">
         <part>01</part>
@@ -46,20 +46,20 @@
 
         <!-- gfx1 - starts at 0x80000 -->
         <interleave output="16">
-            <part name="padlem.16m" crc="0984fb4d" map="01"/>
-            <part name="padlem.9m" crc="4ee4970d" map="10"/>
+            <part name="padlem.9m" crc="4ee4970d" map="01"/>
+            <part name="padlem.16m" crc="0984fb4d" map="10"/>
         </interleave>
         <interleave output="16">
-            <part name="padlem.16n" crc="4249e047" map="01"/>
-            <part name="padlem.9n" crc="a1756f15" map="10"/>
+            <part name="padlem.9n" crc="a1756f15" map="01"/>
+            <part name="padlem.16n" crc="4249e047" map="10"/>
         </interleave>
         <interleave output="16">
-            <part name="padlem.13m" crc="fd9dbc27" map="01"/>
-            <part name="padlem.6m" crc="3f47910c" map="10"/>
+            <part name="padlem.6m" crc="3f47910c" map="01"/>
+            <part name="padlem.13m" crc="fd9dbc27" map="10"/>
         </interleave>
         <interleave output="16">
-            <part name="padlem.13n" crc="1d460486" map="01"/>
-            <part name="padlem.6n" crc="fe337655" map="10"/>
+            <part name="padlem.6n" crc="fe337655" map="01"/>
+            <part name="padlem.13n" crc="1d460486" map="10"/>
         </interleave>
 
         <!-- audiocpu - starts at 0x100000 -->
@@ -70,15 +70,15 @@
 
         <!-- clut_proms - starts at 0x118000 -->
         <interleave output="16">
-        <part name="padlem.17j" crc="86170069" map="0001"/>
-        <part name="padlem.16j" crc="8da58e2c" map="0010"/>
+            <part name="padlem.17j" crc="86170069" map="01"/>
+            <part name="padlem.16j" crc="8da58e2c" map="10"/>
         </interleave>
 
         <!-- proms - starts at 0x118800 -->
         <interleave output="32">
-        <part name="padlem.a" crc="cae6bcd6" map="0001"/>
-        <part name="padlem.b" crc="b6df8dcb" map="0010"/>
-        <part name="padlem.c" crc="39ca9b86" map="0100"/>
+            <part name="padlem.a" crc="cae6bcd6" map="0001"/>
+            <part name="padlem.b" crc="b6df8dcb" map="0010"/>
+            <part name="padlem.c" crc="39ca9b86" map="0100"/>
         </interleave>
 
         <!-- Total 0x118B00 bytes - 1122 kBytes -->
