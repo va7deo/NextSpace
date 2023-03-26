@@ -298,6 +298,12 @@ always @(posedge clk_sys) begin
     end
 end
 
+always @(posedge clk_sys) begin
+    if (ioctl_wr && ioctl_index==1) begin
+        pcb <= ioctl_dout;
+    end
+end
+
 wire        direct_video;
 
 wire        ioctl_download;
@@ -314,6 +320,7 @@ reg   [3:0] pcb;
 reg   [7:0] cfg;
 
 localparam NEXTSPACE   = 0;
+localparam PADDLEMANIA = 1;
 
 wire [21:0] gamma_bus;
 
@@ -689,7 +696,7 @@ always @ (posedge clk_sys) begin
             // tile_colour_rom_addr valid
 
             spr_x_ofs <= 0;
-            spr_x_pos <= sprite_col_x[7:0] ;//+ 1;
+            spr_x_pos <= sprite_col_x[7:0] ;
             sprite_state <= 18;
             
         end else if ( sprite_state == 18 )  begin       
@@ -784,7 +791,11 @@ always @ (posedge clk_sys) begin
         end else if ( clk6_count == 7 ) begin
             palette_addr <= clut_data ;
         end else if ( clk6_count == 9 ) begin
-            rgb <= {  { 2 { palette_data[27:24] } }, { 2 { palette_data[19:16] }} , { 2 { palette_data[11:8] }} };
+            if ( spr_buf_dout[3:0] == 0 ) begin
+                rgb <= 0;
+            end else begin
+                rgb <= {  { 2 { palette_data[27:24] } }, { 2 { palette_data[19:16] }} , { 2 { palette_data[11:8] }} };
+            end
         end
     end
 end
@@ -982,16 +993,9 @@ chip_select cs (
     .m68k_dsw2_cs,
    
     .m68k_sound_cs,
-
-    // interrupt clear & watchdog
-//    .vbl_int_clr_cs,
-//    .cpu_int_clr_cs,
-//    .watchdog_clr_cs,
-
-    .m68k_latch_cs, // write commands to z80 from 68k
+    .m68k_latch_cs, 
     
     // z80 
-
     .z80_rom_cs,
     .z80_ram_cs,
     
@@ -1019,7 +1023,6 @@ wire m68k_halted_n   ;    // Halt output
 wire [15:0] m68k_dout       ;
 wire [23:0] m68k_a   /* synthesis keep */       ;
 reg  [15:0] m68k_din        ;   
-//assign m68k_a[0] = 1'b0;
 
 // CPU inputs
 reg  m68k_dtack_n ;         // Data transfer ack (always ready)
@@ -1096,8 +1099,7 @@ wire    [7:0] z80_dout;
 
 wire z80_wr_n;
 wire z80_rd_n;
-//wire z80_wait_n = ~(z80_banked_cs & ~z80_banked_valid ) ;
-reg z80_wait_n;
+reg  z80_wait_n;
 reg  z80_irq_n;
 reg  z80_nmi_n;
 
@@ -1443,25 +1445,25 @@ sdram #(.CLK_FREQ( (CLKSYS+0.0))) sdram
 
 endmodule
 
-module delay
-(
-    input clk,
-    input clk_en,
-    input i,
-    output o
-);
-
-reg [5:0] r;
-
-assign o = r[0]; 
-
-always @(posedge clk) begin
-    if ( clk_en == 1 ) begin
-        r <= { r[4:0], i };
-    end
-end
-
-endmodule
+//module delay
+//(
+//    input clk,
+//    input clk_en,
+//    input i,
+//    output o
+//);
+//
+//reg [5:0] r;
+//
+//assign o = r[0]; 
+//
+//always @(posedge clk) begin
+//    if ( clk_en == 1 ) begin
+//        r <= { r[4:0], i };
+//    end
+//end
+//
+//endmodule
 
 
 
