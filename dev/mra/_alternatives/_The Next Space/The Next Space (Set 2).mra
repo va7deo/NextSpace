@@ -1,14 +1,14 @@
 <misterromdescription>
-    <name>The Next Space (Japan)</name>
-    <setname>tnextspcj</setname>
+    <name>The Next Space (Set 2)</name>
+    <setname>tnextspc2</setname>
     <rbf>nextspace</rbf>
     <mameversion>0250</mameversion>
     <year>1989</year>
-    <manufacturer>SNK (Pasadena International Corp. license)</manufacturer>
+    <manufacturer>SNK</manufacturer>
     <players>2</players>
     <joystick>8-way</joystick>
     <rotation>vertical (cw)</rotation>
-    <region>Japan</region>
+    <region>World</region>
 
     <switches default="ff,ff">
         <!-- DSW1 -->
@@ -26,18 +26,33 @@
         <dip name="Service Mode" bits="15" ids="On,Off"/>
     </switches>
 
-    <buttons names="Shot,Item Shot,-,P1 Start,P2 Start,Coin A,Coin B,Pause" default="A,B,X,Y,R,L,Start"/>
+    <buttons names="Shot,Item Shot,-,Start,Coin,Pause" default="Y,X,A,R,L,Start" count="2"/>
 
-    <rom index="0" zip="tnextspcj.zip|tnextspc.zip" md5="None">
+    <rom index="0" zip="tnextspc2.zip|tnextspc.zip" md5="None">
         <!-- maincpu - starts at 0x0 -->
         <interleave output="16">
-            <part name="ns_ver1_j4.4" crc="5cdf710d" map="01"/>
-            <part name="ns_ver1_j3.3" crc="cd9532d0" map="10"/>
+            <part name="ns_4.4" crc="4617cba3" map="01"/>
+            <part name="ns_3.3" crc="a6c47fef" map="10"/>
         </interleave>
         <part repeat="0x40000"> FF</part>
 
         <!-- gfx1 - starts at 0x80000 -->
-        <part name="ns_5678.bin" crc="22756451"/>
+        <interleave output="16">
+            <part name="b7.ic53" crc="a8b13a9a" map="01"/>
+            <part name="b3.ic49" crc="2bddf94d" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="b8.ic54" crc="bf0762a0" map="01"/>
+            <part name="b4.ic50" crc="80c6c841" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="b9.ic55" crc="45d730b9" map="01"/>
+            <part name="b5.ic51" crc="e487750b" map="10"/>
+        </interleave>
+        <interleave output="16">
+            <part name="b10.ic56" crc="f48819df" map="01"/>
+            <part name="b6.ic52" crc="0618cf49" map="10"/>
+        </interleave>
 
         <!-- audiocpu - starts at 0x100000 -->
         <part name="ns_1.1" crc="fc26853c"/>

@@ -1,4 +1,4 @@
-## Generated SDC file "Alpha68k.out.sdc"
+## Generated SDC file "NextSpace.sdc"
 
 ## Copyright (C) 2020  Intel Corporation. All rights reserved.
 ## Your use of Intel Corporation's design tools, logic functions 
@@ -20,7 +20,7 @@
 ## PROGRAM "Quartus Prime"
 ## VERSION "Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition"
 
-## DATE    "Thu Nov 24 20:35:56 2022"
+## DATE    "Thu Mar 23 14:10:18 2023"
 
 ##
 ## DEVICE  "5CSEBA6U23I7"
@@ -39,16 +39,16 @@ set_time_format -unit ns -decimal_places 3
 # Create Clock
 #**************************************************************
 
-create_clock -name {clk_20M} -period 50.000 -waveform { 0.000 25.000 } [get_nets {emu|clk_20M}]
-create_clock -name {clk_4M} -period 250.000 -waveform { 0.000 125.000 } [get_nets {emu|clk_4M}]
-create_clock -name {clk_3M} -period 333.333 -waveform { 0.000 166.666 } [get_nets {emu|clk_3M}]
-create_clock -name {clk_6M} -period 166.666 -waveform { 0.000 83.333 } [get_nets {emu|clk_6M}]
+create_clock -name {altera_reserved_tck} -period 33.333 -waveform { 0.000 16.666 } [get_ports {altera_reserved_tck}]
 create_clock -name {FPGA_CLK1_50} -period 20.000 -waveform { 0.000 10.000 } [get_ports {FPGA_CLK1_50}]
 create_clock -name {FPGA_CLK2_50} -period 20.000 -waveform { 0.000 10.000 } [get_ports {FPGA_CLK2_50}]
 create_clock -name {FPGA_CLK3_50} -period 20.000 -waveform { 0.000 10.000 } [get_ports {FPGA_CLK3_50}]
 create_clock -name {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk} -period 10.000 -waveform { 0.000 5.000 } [get_pins -compatibility_mode {*|h2f_user0_clk}]
 create_clock -name {spi_sck} -period 10.000 -waveform { 0.000 5.000 } [get_pins -compatibility_mode {spi|sclk_out}]
 create_clock -name {hdmi_sck} -period 100.000 -waveform { 0.000 50.000 } [get_pins -compatibility_mode {hdmi_i2c|out_clk}]
+create_clock -name {emu:emu|clk_4M} -period 10.000 -waveform { 0.000 5.000 } 
+create_clock -name {emu:emu|clk_6M} -period 10.000 -waveform { 0.000 5.000 } 
+create_clock -name {emu:emu|clk_18M} -period 10.000 -waveform { 0.000 5.000 } 
 
 
 #**************************************************************
@@ -57,11 +57,11 @@ create_clock -name {hdmi_sck} -period 100.000 -waveform { 0.000 50.000 } [get_pi
 
 create_generated_clock -name {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk} -source [get_pins {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|vco0ph[0]}] -duty_cycle 50/1 -multiply_by 1 -divide_by 3 -master_clock {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll|vcoph[0]} [get_pins {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] 
 create_generated_clock -name {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll|vcoph[0]} -source [get_pins {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll|refclkin}] -duty_cycle 50/1 -multiply_by 4563 -divide_by 512 -master_clock {FPGA_CLK1_50} [get_pins {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll|vcoph[0]}] 
+create_generated_clock -name {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]} -source [get_pins {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|refclkin}] -duty_cycle 50/1 -multiply_by 4279 -divide_by 512 -master_clock {FPGA_CLK3_50} [get_pins {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]}] 
+create_generated_clock -name {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk} -source [get_pins {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|vco0ph[0]}] -duty_cycle 50/1 -multiply_by 1 -divide_by 17 -master_clock {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]} [get_pins {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] 
 create_generated_clock -name {emu|pll|pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]} -source [get_pins {emu|pll|pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|refclkin}] -duty_cycle 50/1 -multiply_by 36 -divide_by 5 -master_clock {FPGA_CLK2_50} [get_pins {emu|pll|pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]}] 
 create_generated_clock -name {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk} -source [get_pins {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|vco0ph[0]}] -duty_cycle 50/1 -multiply_by 1 -divide_by 5 -master_clock {emu|pll|pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]} [get_pins {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] 
 create_generated_clock -name {emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk} -source [get_pins {emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|vco0ph[0]}] -duty_cycle 50/1 -multiply_by 1 -divide_by 5 -phase -203085/1736 -master_clock {emu|pll|pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]} [get_pins {emu|pll|pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk}] 
-create_generated_clock -name {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]} -source [get_pins {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|refclkin}] -duty_cycle 50/1 -multiply_by 4279 -divide_by 512 -master_clock {FPGA_CLK3_50} [get_pins {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]}] 
-create_generated_clock -name {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk} -source [get_pins {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|vco0ph[0]}] -duty_cycle 50/1 -multiply_by 1 -divide_by 17 -master_clock {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]} [get_pins {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] 
 
 
 #**************************************************************
@@ -74,34 +74,30 @@ create_generated_clock -name {pll_audio|pll_audio_inst|altera_pll_i|general[0].g
 # Set Clock Uncertainty
 #**************************************************************
 
+set_clock_uncertainty -rise_from [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -rise_to [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -setup 0.200  
+set_clock_uncertainty -rise_from [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -rise_to [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -hold 0.080  
+set_clock_uncertainty -rise_from [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -fall_to [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -setup 0.200  
+set_clock_uncertainty -rise_from [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -fall_to [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -hold 0.080  
+set_clock_uncertainty -fall_from [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -rise_to [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -setup 0.200  
+set_clock_uncertainty -fall_from [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -rise_to [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -hold 0.080  
+set_clock_uncertainty -fall_from [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -fall_to [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -setup 0.200  
+set_clock_uncertainty -fall_from [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -fall_to [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}] -hold 0.080  
 set_clock_uncertainty -rise_from [get_clocks {spi_sck}] -rise_to [get_clocks {spi_sck}]  0.060  
 set_clock_uncertainty -rise_from [get_clocks {spi_sck}] -fall_to [get_clocks {spi_sck}]  0.060  
 set_clock_uncertainty -fall_from [get_clocks {spi_sck}] -rise_to [get_clocks {spi_sck}]  0.060  
 set_clock_uncertainty -fall_from [get_clocks {spi_sck}] -fall_to [get_clocks {spi_sck}]  0.060  
 set_clock_uncertainty -rise_from [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}] -rise_to [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}]  0.060  
 set_clock_uncertainty -rise_from [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}] -fall_to [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}]  0.060  
-set_clock_uncertainty -rise_from [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}] -rise_to [get_clocks {clk_20M}]  0.160  
-set_clock_uncertainty -rise_from [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}] -fall_to [get_clocks {clk_20M}]  0.160  
 set_clock_uncertainty -fall_from [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}] -rise_to [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}]  0.060  
 set_clock_uncertainty -fall_from [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}] -fall_to [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}]  0.060  
-set_clock_uncertainty -fall_from [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}] -rise_to [get_clocks {clk_20M}]  0.160  
-set_clock_uncertainty -fall_from [get_clocks {sysmem|fpga_interfaces|clocks_resets|h2f_user0_clk}] -fall_to [get_clocks {clk_20M}]  0.160  
 set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK2_50}] -rise_to [get_clocks {FPGA_CLK2_50}] -setup 0.170  
 set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK2_50}] -rise_to [get_clocks {FPGA_CLK2_50}] -hold 0.060  
 set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK2_50}] -fall_to [get_clocks {FPGA_CLK2_50}] -setup 0.170  
 set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK2_50}] -fall_to [get_clocks {FPGA_CLK2_50}] -hold 0.060  
-set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK2_50}] -rise_to [get_clocks {clk_20M}]  0.220  
-set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK2_50}] -fall_to [get_clocks {clk_20M}]  0.220  
 set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK2_50}] -rise_to [get_clocks {FPGA_CLK2_50}] -setup 0.170  
 set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK2_50}] -rise_to [get_clocks {FPGA_CLK2_50}] -hold 0.060  
 set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK2_50}] -fall_to [get_clocks {FPGA_CLK2_50}] -setup 0.170  
 set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK2_50}] -fall_to [get_clocks {FPGA_CLK2_50}] -hold 0.060  
-set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK2_50}] -rise_to [get_clocks {clk_20M}]  0.220  
-set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK2_50}] -fall_to [get_clocks {clk_20M}]  0.220  
-set_clock_uncertainty -rise_from [get_clocks {clk_6M}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.310  
-set_clock_uncertainty -rise_from [get_clocks {clk_6M}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.310  
-set_clock_uncertainty -fall_from [get_clocks {clk_6M}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.310  
-set_clock_uncertainty -fall_from [get_clocks {clk_6M}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.310  
 set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK1_50}] -rise_to [get_clocks {FPGA_CLK1_50}] -setup 0.170  
 set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK1_50}] -rise_to [get_clocks {FPGA_CLK1_50}] -hold 0.060  
 set_clock_uncertainty -rise_from [get_clocks {FPGA_CLK1_50}] -fall_to [get_clocks {FPGA_CLK1_50}] -setup 0.170  
@@ -110,10 +106,22 @@ set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK1_50}] -rise_to [get_clock
 set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK1_50}] -rise_to [get_clocks {FPGA_CLK1_50}] -hold 0.060  
 set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK1_50}] -fall_to [get_clocks {FPGA_CLK1_50}] -setup 0.170  
 set_clock_uncertainty -fall_from [get_clocks {FPGA_CLK1_50}] -fall_to [get_clocks {FPGA_CLK1_50}] -hold 0.060  
-set_clock_uncertainty -rise_from [get_clocks {clk_3M}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.180  
-set_clock_uncertainty -rise_from [get_clocks {clk_3M}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.180  
-set_clock_uncertainty -fall_from [get_clocks {clk_3M}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.180  
-set_clock_uncertainty -fall_from [get_clocks {clk_3M}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.180  
+set_clock_uncertainty -rise_from [get_clocks {altera_reserved_tck}] -rise_to [get_clocks {altera_reserved_tck}] -setup 0.310  
+set_clock_uncertainty -rise_from [get_clocks {altera_reserved_tck}] -rise_to [get_clocks {altera_reserved_tck}] -hold 0.270  
+set_clock_uncertainty -rise_from [get_clocks {altera_reserved_tck}] -fall_to [get_clocks {altera_reserved_tck}] -setup 0.310  
+set_clock_uncertainty -rise_from [get_clocks {altera_reserved_tck}] -fall_to [get_clocks {altera_reserved_tck}] -hold 0.270  
+set_clock_uncertainty -fall_from [get_clocks {altera_reserved_tck}] -rise_to [get_clocks {altera_reserved_tck}] -setup 0.310  
+set_clock_uncertainty -fall_from [get_clocks {altera_reserved_tck}] -rise_to [get_clocks {altera_reserved_tck}] -hold 0.270  
+set_clock_uncertainty -fall_from [get_clocks {altera_reserved_tck}] -fall_to [get_clocks {altera_reserved_tck}] -setup 0.310  
+set_clock_uncertainty -fall_from [get_clocks {altera_reserved_tck}] -fall_to [get_clocks {altera_reserved_tck}] -hold 0.270  
+set_clock_uncertainty -rise_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -setup 0.290  
+set_clock_uncertainty -rise_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -hold 0.280  
+set_clock_uncertainty -rise_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -setup 0.290  
+set_clock_uncertainty -rise_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -hold 0.280  
+set_clock_uncertainty -fall_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -setup 0.290  
+set_clock_uncertainty -fall_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -hold 0.280  
+set_clock_uncertainty -fall_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -setup 0.290  
+set_clock_uncertainty -fall_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -hold 0.280  
 set_clock_uncertainty -rise_from [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -setup 0.200  
 set_clock_uncertainty -rise_from [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -hold 0.060  
 set_clock_uncertainty -rise_from [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -setup 0.200  
@@ -122,26 +130,6 @@ set_clock_uncertainty -fall_from [get_clocks {pll_audio|pll_audio_inst|altera_pl
 set_clock_uncertainty -fall_from [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -hold 0.060  
 set_clock_uncertainty -fall_from [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -setup 0.200  
 set_clock_uncertainty -fall_from [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {pll_audio|pll_audio_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -hold 0.060  
-set_clock_uncertainty -rise_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {clk_6M}]  0.310  
-set_clock_uncertainty -rise_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {clk_6M}]  0.310  
-set_clock_uncertainty -rise_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {clk_20M}]  0.310  
-set_clock_uncertainty -rise_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {clk_20M}]  0.310  
-set_clock_uncertainty -fall_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {clk_6M}]  0.310  
-set_clock_uncertainty -fall_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {clk_6M}]  0.310  
-set_clock_uncertainty -fall_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -rise_to [get_clocks {clk_20M}]  0.310  
-set_clock_uncertainty -fall_from [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}] -fall_to [get_clocks {clk_20M}]  0.310  
-set_clock_uncertainty -rise_from [get_clocks {clk_20M}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.310  
-set_clock_uncertainty -rise_from [get_clocks {clk_20M}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.310  
-set_clock_uncertainty -rise_from [get_clocks {clk_20M}] -rise_to [get_clocks {clk_20M}]  0.270  
-set_clock_uncertainty -rise_from [get_clocks {clk_20M}] -fall_to [get_clocks {clk_20M}]  0.270  
-set_clock_uncertainty -fall_from [get_clocks {clk_20M}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.310  
-set_clock_uncertainty -fall_from [get_clocks {clk_20M}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.310  
-set_clock_uncertainty -fall_from [get_clocks {clk_20M}] -rise_to [get_clocks {clk_20M}]  0.270  
-set_clock_uncertainty -fall_from [get_clocks {clk_20M}] -fall_to [get_clocks {clk_20M}]  0.270  
-set_clock_uncertainty -rise_from [get_clocks {clk_4M}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.180  
-set_clock_uncertainty -rise_from [get_clocks {clk_4M}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.180  
-set_clock_uncertainty -fall_from [get_clocks {clk_4M}] -rise_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.180  
-set_clock_uncertainty -fall_from [get_clocks {clk_4M}] -fall_to [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  0.180  
 
 
 #**************************************************************
@@ -160,6 +148,7 @@ set_clock_uncertainty -fall_from [get_clocks {clk_4M}] -fall_to [get_clocks {emu
 # Set Clock Groups
 #**************************************************************
 
+set_clock_groups -asynchronous -group [get_clocks {altera_reserved_tck}] 
 set_clock_groups -exclusive -group [get_clocks { *|pll|pll_inst|altera_pll_i|*[*].*|divclk}] -group [get_clocks { pll_hdmi|pll_hdmi_inst|altera_pll_i|*[0].*|divclk}] -group [get_clocks { pll_audio|pll_audio_inst|altera_pll_i|*[0].*|divclk}] -group [get_clocks { spi_sck}] -group [get_clocks { hdmi_sck}] -group [get_clocks { *|h2f_user0_clk}] -group [get_clocks { FPGA_CLK1_50 }] -group [get_clocks { FPGA_CLK2_50 }] -group [get_clocks { FPGA_CLK3_50 }] 
 
 
@@ -167,9 +156,6 @@ set_clock_groups -exclusive -group [get_clocks { *|pll|pll_inst|altera_pll_i|*[*
 # Set False Path
 #**************************************************************
 
-set_false_path  -from  [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}]  -to  [get_clocks {pll_hdmi|pll_hdmi_inst|altera_pll_i|cyclonev_pll|counter[0].output_counter|divclk}]
-set_false_path  -from  [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]  -to  [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]
-set_false_path  -from  [get_clocks {clk_20M}]  -to  [get_clocks {emu|pll|pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]
 set_false_path -to [get_keepers {*altera_std_synchronizer:*|din_s1}]
 set_false_path -from [get_ports {KEY*}] 
 set_false_path -from [get_ports {BTN_*}] 
@@ -212,445 +198,6 @@ set_false_path -from [get_keepers {ascal|o_htotal* ascal|o_vtotal*}]
 set_false_path -from [get_keepers {ascal|o_hsstart* ascal|o_vsstart* ascal|o_hsend* ascal|o_vsend*}] 
 set_false_path -from [get_keepers {ascal|o_hsize* ascal|o_vsize*}] 
 set_false_path -from [get_keepers {mcp23009|sd_cd}] 
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|cmd[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_11}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_4}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.IDLE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[15]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[14]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[16]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_9}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|cmd[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_5}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[18]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_11}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.ACTIVE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|rom_controller:rom_controller|rom.PROG_ROM_2}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_4}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.IDLE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_7}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_3}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_10}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_11}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[15]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[14]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[16]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_12}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|cmd[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_1}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_16}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_15}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|m68k_dtack_n}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_6}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_13}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_9}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_14}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_2}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_4}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_9}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_5}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[18]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.ACTIVE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[18]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|rom_controller:rom_controller|rom.PROG_ROM_2}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|m68k_dtack_n}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|state.READ}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[16]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[17]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_7}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.IDLE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_3}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|rom_controller:rom_controller|rom.PROG_ROM_2}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_10}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_12}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_1}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[15]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[14]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[16]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_5}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_16}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_15}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_6}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|m68k_dtack_n}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_13}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_14}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_2}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.ACTIVE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[17]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_10}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_7}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_3}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_12}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_13}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_1}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_16}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_15}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_6}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_14}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_2}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|state.READ}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[18]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[17]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[11]}] -to [get_keepers {emu:emu|sdram:sdram|state.READ}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_11}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_11}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_4}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[8]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_11}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|cmd[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|credits[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_4}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_9}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|credits[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|credits[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|cmd[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_11}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|state.IDLE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[15]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_9}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[16]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[14]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|coin_latch[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[4]}] -to [get_keepers {emu:emu|coin_latch[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|state.IDLE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|state.IDLE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_4}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_5}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|rom_controller:rom_controller|rom.PROG_ROM}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[5]}] -to [get_keepers {emu:emu|credits[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|credits[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_9}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|credits[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[17]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[15]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[16]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[14]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[7]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[13]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_4}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[9]}] -to [get_keepers {emu:emu|sdram:sdram|wait_counter[3]}]
-set_false_path -from [get_keepers {emu:emu|dual_port_ram:ram8kx8_L|altsyncram:altsyncram_component|altsyncram_np14:auto_generated|ram_block1a2~porta_we_reg}] -to [get_keepers {emu:emu|m68k_din[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[2]}] -to [get_keepers {emu:emu|credits[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[13]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[12]}] -to [get_keepers {emu:emu|sdram:sdram|cmd[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|cmd[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[5]}] -to [get_keepers {emu:emu|credits[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[5]}] -to [get_keepers {emu:emu|credits[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|credits[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[3]}] -to [get_keepers {emu:emu|credits[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|rom_controller:rom_controller|rom.PROG_ROM}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|credits[0]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|credits[1]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[10]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_8}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|cmd[2]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[10]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[12]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[3]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[6]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[9]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[11]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_addr[8]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|state.IDLE}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_9}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_din[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_din[4]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[6]}] -to [get_keepers {emu:emu|mcu_din[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[17]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_11}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[7]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[14]}] -to [get_keepers {emu:emu|sdram:sdram|addr_reg[5]}]
-set_false_path -from [get_keepers {emu:emu|fx68k:fx68k|excUnit:excUnit|aob[15]}] -to [get_keepers {emu:emu|sdram:sdram|state.WRITE~_Duplicate_5}]
 
 
 #**************************************************************
