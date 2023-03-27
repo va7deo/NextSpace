@@ -99,13 +99,13 @@ always @ (*) begin
             m68k_rom_cs      <= m68k_cs( 24'h000000, 24'h03ffff ) ;
             m68k_ram_cs      <= m68k_cs( 24'h080000, 24'h083fff ) ;
             m68k_spr_cs      <= m68k_cs( 24'h100000, 24'h103fff ) ;
+                        
+            m68k_p1_cs      <= m68k_cs( 24'h300000, 24'h300001 ) & m68k_rw ;
+            m68k_p2_cs      <= m68k_cs( 24'h380000, 24'h380001 ) & m68k_rw ;
+            m68k_coin_cs    <= m68k_cs( 24'h340000, 24'h340001 ) & m68k_rw ;
             
-            m68k_p1_cs      <= m68k_cs( 24'h0e0000, 24'h0e0001 ) & m68k_rw ;
-            m68k_p2_cs      <= m68k_cs( 24'h0e0002, 24'h0e0003 ) & m68k_rw ;
-            m68k_coin_cs    <= m68k_cs( 24'h0e0004, 24'h0e0005 ) & m68k_rw ;
-            
-            m68k_dsw1_cs     <= m68k_cs( 24'h0e0008, 24'h0e0009 ) ;
-            m68k_dsw2_cs     <= m68k_cs( 24'h0e000a, 24'h0e000b ) ;
+            m68k_dsw1_cs     <= m68k_cs( 24'h180000, 24'h180001 ) ;
+            m68k_dsw2_cs     <= m68k_cs( 24'h180008, 24'h180009 ) ;
             
             m68k_sound_cs    <= m68k_cs( 24'h0e0018, 24'h0e0019 ) & m68k_rw ;
             

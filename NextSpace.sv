@@ -343,8 +343,8 @@ always @ (posedge clk_sys ) begin
 
         coin <=  ~{ 13'b1, key_service, coin_b, coin_a};
     end else begin
-    p1   <=  ~{ 1'b1, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up, 1'b1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
-    coin   <=  ~{ 1'b1, key_service, 4'b1, start2, start1, 6'b1, coin_b, coin_a };
+        p1   <=  ~{ 1'b1, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up, 1'b1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
+        coin <=  ~{ 1'b1, key_service, 4'b1, start2, start1, 6'b1, coin_b, coin_a };
   end
 end
 
