@@ -259,7 +259,7 @@ wire forced_scandoubler = hps_forced_scandoubler | status[10];
 wire  [1:0] buttons;
 wire [63:0] status;
 wire [10:0] ps2_key;
-wire [15:0] joy0, joy1;
+wire [15:0] joy0, joy1, joy2, joy3;
 
 hps_io #(.CONF_STR(CONF_STR)) hps_io
 (
@@ -285,7 +285,9 @@ hps_io #(.CONF_STR(CONF_STR)) hps_io
     .ioctl_wait(ioctl_wait),
 
     .joystick_0(joy0),
-    .joystick_1(joy1)
+    .joystick_1(joy1),
+    .joystick_2(joy2),
+    .joystick_3(joy3)
 );
 
 // INPUT
@@ -332,13 +334,18 @@ reg [15:0] dsw2_m68k;
 reg [15:0] coin;
 
 always @ (posedge clk_sys ) begin
-    p1   <=  ~{ start1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
-    p2   <=  ~{ start2, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up };
+    if ( pcb == NEXTSPACE ) begin
+        p1   <=  ~{ start1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
+        p2   <=  ~{ start2, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up };
 
-    dsw1_m68k <= { 8'hff, sw[0] };
-    dsw2_m68k <= { 8'hff, sw[1] };
+        dsw1_m68k <= { 8'hff, sw[0] };
+        dsw2_m68k <= { 8'hff, sw[1] };
 
-    coin <=  ~{ 13'b1, key_service, coin_b, coin_a};
+        coin <=  ~{ 13'b1, key_service, coin_b, coin_a};
+    end else begin
+    p1   <=  ~{ 1'b1, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up, 1'b1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
+    coin   <=  ~{ 1'b1, key_service, 4'b1, start2, start1, 6'b1, coin_b, coin_a };
+  end
 end
 
 wire        p1_right;
@@ -353,14 +360,47 @@ wire        p2_down;
 wire        p2_up;
 wire [2:0]  p2_buttons;
 
+wire        p3_right;
+wire        p3_left;
+wire        p3_down;
+wire        p3_up;
+wire [2:0]  p3_buttons;
+
+wire        p4_right;
+wire        p4_left;
+wire        p4_down;
+wire        p4_up;
+wire [2:0]  p4_buttons;
+
 wire start1;
 wire start2;
+wire start3;
+wire start4;
 wire coin_a;
 wire coin_b;
 wire b_pause;
 wire service;
 
 always @ * begin
+    if ( pcb == NEXTSPACE ) begin
+        p1_right   <= joy0[0] | key_p1_right;
+        p1_left    <= joy0[1] | key_p1_left;
+        p1_down    <= joy0[2] | key_p1_down;
+        p1_up      <= joy0[3] | key_p1_up;
+        p1_buttons <= joy0[6:4] | {key_p1_c, key_p1_b, key_p1_a};
+
+        p2_right   <= joy1[0] | key_p2_right;
+        p2_left    <= joy1[1] | key_p2_left;
+        p2_down    <= joy1[2] | key_p2_down;
+        p2_up      <= joy1[3] | key_p2_up;
+        p2_buttons <= joy1[6:4] | {key_p2_c, key_p2_b, key_p2_a};
+
+        start1  = joy0[7]  | joy1[7]  | key_start_1p;
+        start2  = joy0[8]  | joy1[8]  | key_start_2p;
+        coin_a  = joy0[9]  | joy1[9]  | key_coin_a;
+        coin_b  = joy0[10] | joy1[10] | key_coin_b;
+        b_pause = joy0[11] | key_pause;
+    end else begin
     p1_right   <= joy0[0] | key_p1_right;
     p1_left    <= joy0[1] | key_p1_left;
     p1_down    <= joy0[2] | key_p1_down;
@@ -378,6 +418,7 @@ always @ * begin
     coin_a  = joy0[9]  | joy1[9]  | key_coin_a;
     coin_b  = joy0[10] | joy1[10] | key_coin_b;
     b_pause = joy0[11] | key_pause;
+  end
 end
 
 // Keyboard handler

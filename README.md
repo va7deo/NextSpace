@@ -7,7 +7,7 @@ The intent is for this core to be a 1:1 playable implementation of The Next Spac
 
 <br>
 <p align="center">
-<img width="" height="" src="FILLME">
+<img width="" height="" src="https://user-images.githubusercontent.com/32810066/227825179-40535bb2-fe8c-45e2-a56c-05523264c98c.png">
 </p>
 
 ## Supported Games
@@ -34,17 +34,18 @@ W.I.P
 
 ### Clock Information
 
-H-Sync      | V-Sync      | Source           | PCB<br>Number  |
-------------|-------------|------------------|----------------|
-15.625kHz   | 59.185606Hz | [**AD**](FILLME) | A8004-1 (TNS)  |
+H-Sync      | V-Sync      | Source                  | PCB<br>Number  |
+------------|-------------|-------------------------|----------------|
+15.625kHz   | 59.185606Hz | [**ADALM2000**](FILLME) | A8004-1 (TNS)  |
 
 ### Crystal Oscillators
 
-Location        | PCB<br>Number | Freq (MHz) | Use          |
-|---------------|---------------|------------|--------------|
-24MHz           | A8004-1 (TNS) | 24.000     |              |
-4MHz            | A8004-1 (TNS) | 4.000      |              |
-18MHz           | A8004-1 (TNS) | 18.000     |              |
+Location        | PCB<br>Number | Freq (MHz) | Use            |
+|---------------|---------------|------------|----------------|
+24MHz           | A8004-1 (TNS) | 24.000     | Video, Z80     |
+4MHz            | A8004-1 (TNS) | 4.000      | YM 3812        |
+18MHz           | A8004-1 (TNS) | 18.000     | M68000         |
+24MHz           | 68K-96-1 (PM) | 24.000     | All Components |
 
 **Pixel clock:** 6.00 MHz
 
@@ -61,13 +62,17 @@ Location | PCB<br>Number | Chip | Use |
 15-L     | A8004-1 (TNS)  | [**Motorola 68000 CPU**](https://en.wikipedia.org/wiki/Motorola_68000) | Main CPU  |
 Z80A     | A8004-1 (TNS)  | [**Zilog Z80 CPU**](https://en.wikipedia.org/wiki/Zilog_Z80)           | Sound CPU |
 YM3812   | A8004-1 (TNS)  | [**Yamaha YM3812**](https://en.wikipedia.org/wiki/Yamaha_OPL#OPL2)     | OPL-2     |
+68000-8  | 68K-96-1 (PM)  | [**Motorola 68000 CPU**](https://en.wikipedia.org/wiki/Motorola_68000) | Main CPU  |
+Z80A     | 68K-96-1 (PM)  | [**Zilog Z80 CPU**](https://en.wikipedia.org/wiki/Zilog_Z80)           | Sound CPU |
+20 Y3812 | 68K-96-1 (PM)  | [**Yamaha YM3812**](https://en.wikipedia.org/wiki/Yamaha_OPL#OPL2)     | OPL-2     |
 
 ### Custom Components
 
 Location | PCB<br>Number | Chip | Use |
 ---------|---------------|------|-----|
-SNKCLK   | A8004-1 (TNS) | [**SNK CLK**](https://github.com/va7deo/alpha68k/blob/main/doc/ALPHA-68K96V/ALPHA68K-96V_Schematics.pdf) | Counter |
-SNK I/O  | A8004-1 (TNS) | [**SNK I/O**](https://github.com/va7deo/SNK68/blob/main/doc/Custom%20Components/SNK_IO.jpg)              | Controls |
+SNKCLK   | A8004-1 (TNS) | [**SNK CLK**](https://github.com/va7deo/alpha68k/blob/main/doc/ALPHA-68K96V/ALPHA68K-96V_Schematics.pdf)        | Counter |
+SNK I/O  | A8004-1 (TNS) | [**SNK I/O**](https://github.com/va7deo/SNK68/blob/main/doc/Custom%20Components/SNK_IO.jpg)                     | Input Handling |
+INPUT 87 | 68K-96-1 (PM) | [**ALPHA-INPUT 87**](https://github.com/va7deo/alpha68k/blob/main/doc/ALPHA-68K96V/ALPHA68K-96V_Schematics.pdf) | Input Handling |
 
 # Core Features
 
@@ -91,7 +96,7 @@ SNK I/O  | A8004-1 (TNS) | [**SNK I/O**](https://github.com/va7deo/SNK68/blob/ma
 
 <br>
 
-<table><tr><th>Game</th><th>Joystick</th><th>Service Menu</th><th>Control Type</th></tr><tr><td><p align="center">Gang Wars</p></td><td><p align="center">8-Way</p></td><td><p align="center"><br><img width="128" height="112" src="FILLME"></td><td><p align="center">Co-Op</td><tr><td><p align="center">Paddle<br>Mania</p></td><td><p align="center">8-Way</p></td><td><p align="center"><br><img width="128" height="112" src="FILLME"></td><td><p align="center">Co-Op / VS</td></table>
+<table><tr><th>Game</th><th>Joystick</th><th>Service Menu</th><th>Control Type</th></tr><tr><td><p align="center">The Next Space</p></td><td><p align="center">8-Way</p></td><td><p align="center"><br><img width="128" height="112" src="FILLME"></td><td><p align="center">Co-Op</td><tr><td><p align="center">Paddle<br>Mania</p></td><td><p align="center">8-Way</p></td><td><p align="center"><br><img width="128" height="112" src="FILLME"></td><td><p align="center">Co-Op / VS</td></table>
 
 <br>
 <br>
