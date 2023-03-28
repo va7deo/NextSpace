@@ -28,7 +28,8 @@ The intent is for this core to be a 1:1 playable implementation of The Next Spac
 
 # Known Issues / Tasks
 
-W.I.P
+- Verify video timings for A8004-1 by measuring PCB [Task]  
+- Map P3B1 to R-Ctrl on keyboard input [Issue]  
 
 # PCB Check List
 
@@ -40,12 +41,12 @@ H-Sync      | V-Sync      | Source                  | PCB<br>Number  |
 
 ### Crystal Oscillators
 
-Location        | PCB<br>Number | Freq (MHz) | Use            |
-|---------------|---------------|------------|----------------|
-24MHz           | A8004-1 (TNS) | 24.000     | Video, Z80     |
-4MHz            | A8004-1 (TNS) | 4.000      | YM 3812        |
-18MHz           | A8004-1 (TNS) | 18.000     | M68000         |
-24MHz           | 68K-96-1 (PM) | 24.000     | All Components |
+Location        | PCB<br>Number | Freq (MHz) | Use              |
+|---------------|---------------|------------|------------------|
+24MHz           | A8004-1 (TNS) | 24.000     | Pixel Clock, Z80 |
+4MHz            | A8004-1 (TNS) | 4.000      | YM3812           |
+18MHz           | A8004-1 (TNS) | 18.000     | M68000           |
+24MHz           | 68K-96-1 (PM) | 24.000     | All Components   |
 
 **Pixel clock:** 6.00 MHz
 
@@ -88,22 +89,24 @@ INPUT 87 | 68K-96-1 (PM) | [**ALPHA-INPUT 87**](https://github.com/va7deo/alpha6
 
 - Additional toggle to enable the scandoubler without changing ini settings and new scanline option for 100% is available, this draws a black line every other frame. Below is an example.
 
-<table><tr><th>Scandoubler Fx</th><th>Scanlines 25%</th><th>Scanlines 50%</th><th>Scanlines 75%</th><th>Scanlines 100%</th><tr><td><br> <p align="center"><img width="128" height="112" src="FILLME"></td><td><br> <p align="center"><img width="128" height="112" src="FILLME"></td><td><br> <p align="center"><img width="128" height="112" src="FILLME"></td><td><br> <p align="center"><img width="128" height="112" src="FILLME"></td><td><br> <p align="center"><img width="128" height="112" src="FILLME"></td></tr></table>
+<table><tr><th>Scandoubler Fx</th><th>Scanlines 25%</th><th>Scanlines 50%</th><th>Scanlines 75%</th><th>Scanlines 100%</th><tr><td><br> <p align="center"><img width="112" height="128" src="https://user-images.githubusercontent.com/32810066/228109742-163427e8-bc8e-4bb4-81da-0d1935d679b6.png"></td><td><br> <p align="center"><img width="112" height="128" src="https://user-images.githubusercontent.com/32810066/228109798-6d96e076-b57a-456a-a041-49d8e53a0662.png"></td><td><br> <p align="center"><img width="112" height="128" src="https://user-images.githubusercontent.com/32810066/228109835-7b97b5b1-dea3-477e-b889-a8e81a36a0e1.png"></td><td><br> <p align="center"><img width="112" height="128" src="https://user-images.githubusercontent.com/32810066/228109870-a2f23677-0e22-462a-8881-27f0d8c97812.png"></td><td><br> <p align="center"><img width="112" height="128" src="https://user-images.githubusercontent.com/32810066/228109912-48502df2-9e54-4ff8-a1f8-45680026ecb1.png"></td></tr></table>
 
 # Controls
 
-- The service menu is accessed by toggling a dipswitch for all supported titles. Paddle Mania supports co-op two player versus the CPU opponents or up to four player versus.
+- The service menu is accessed by toggling a dipswitch for supported titles. Paddle Mania has a test switch that can be toggled with F2, it does not enter the test menu and toggling the dipswitch is required.
+
+- Paddle Mania supports co-op two player, two player versus the CPU opponents or a third and up to four player versus.
 
 <br>
 
-<table><tr><th>Game</th><th>Joystick</th><th>Service Menu</th><th>Control Type</th></tr><tr><td><p align="center">The Next Space</p></td><td><p align="center">8-Way</p></td><td><p align="center"><br><img width="128" height="112" src="FILLME"></td><td><p align="center">Co-Op</td><tr><td><p align="center">Paddle<br>Mania</p></td><td><p align="center">8-Way</p></td><td><p align="center"><br><img width="128" height="112" src="FILLME"></td><td><p align="center">Co-Op / VS</td></table>
+<table><tr><th>Game</th><th>Joystick</th><th>Service Menu</th><th>Control Type</th></tr><tr><td><p align="center">The Next Space</p></td><td><p align="center">8-Way</p></td><td><p align="center"><br><img width="112" height="128" src="https://user-images.githubusercontent.com/32810066/228088913-2c313dd3-281c-40c9-ad02-b3513f95ea31.png"></td><td><p align="center">Co-Op</td><tr><td><p align="center">Paddle<br>Mania</p></td><td><p align="center">8-Way</p></td><td><p align="center"><br><img width="112" height="128" src="https://user-images.githubusercontent.com/32810066/228088968-9cd95d72-c22f-44c6-9511-d89564bda02e.png"></td><td><p align="center">Co-Op / VS</td></table>
 
 <br>
 <br>
 
 ### Keyboard Handler
 
-- Keyboard inputs mapped to mame defaults for the following functions. Player 3 and Player 4 input keys are not mapped, only Player 3 / Player 4 start buttons.
+- Keyboard inputs mapped to mame defaults for the following functions. Player 3 and Player 4 input keys are mapped to [**MAME**](https://docs.mamedev.org/usingmame/defaultkeys.html#player-4-controls) standards.
 
 <br>
 
@@ -117,7 +120,7 @@ INPUT 87 | 68K-96-1 (PM) | [**ALPHA-INPUT 87**](https://github.com/va7deo/alpha6
 
 |Player 3|Player 4|
 |--|--|
-|<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Bttn 1</td><td>**N/A**</td></tr><tr><td>P3 Bttn 2</td><td>**N/A**</td></tr><tr><td>P3 Bttn 3</td><td>**N/A**</td></tr><tr><td>P3 Start</td><td>3</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Bttn 1</td><td>**N/A**</td></tr><tr><td>P4 Bttn 2</td><td>**N/A**</td></tr><tr><td>P4 Bttn 3</td><td>**N/A**</td></tr><tr><td>P4 Start</td><td>4</td></tr> </table>|
+|<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Up</td><td>I</td></tr><tr><td>P3 Down</td><td>K</td></tr><tr><td>P3 Left</td><td>J</td></tr><tr><td>P3 Right</td><td>L</td></tr><tr><td>P3 Bttn 1</td><td>Enter</td></tr><tr><td>P3 Bttn 2</td><td>R-Shift</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Up</td><td>8 (Numeric Pad)</td></tr><tr><td>P4 Down</td><td>2 (Numeric Pad)</td></tr><tr><td>P4 Left</td><td>4 (Numeric Pad)</td></tr><tr><td>P4 Right</td><td>6 (Numeric Pad)</td></tr><tr><td>P4 Bttn 1</td><td>0 (Numeric Pad)</td></tr><tr><td>P4 Bttn 2</td><td>. (Numeric Pad)</td></tr> </table>|
 
 # Support
 
