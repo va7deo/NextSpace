@@ -445,10 +445,10 @@ always @(posedge clk_sys) begin
             'h046: key_service    <= pressed; // 9
             'h04D: key_pause      <= pressed; // p
 
-            'hX75: key_p1_up      <= pressed; // up
-            'hX72: key_p1_down    <= pressed; // down
-            'hX6b: key_p1_left    <= pressed; // left
-            'hX74: key_p1_right   <= pressed; // right
+            'h175: key_p1_up      <= pressed; // up
+            'h172: key_p1_down    <= pressed; // down
+            'h16b: key_p1_left    <= pressed; // left
+            'h174: key_p1_right   <= pressed; // right
             'h014: key_p1_a       <= pressed; // lctrl
             'h011: key_p1_b       <= pressed; // lalt
             'h029: key_p1_c       <= pressed; // spacebar
@@ -507,7 +507,9 @@ always @ (posedge clk_sys) begin
 
     // 18MHZ
     clk_18M <= ( clk18_count == 0 );
-    if ( clk18_count == 3 ) begin 
+    // the next space = 9MHz
+    // paddle mania = 6MHz
+    if ( clk18_count == ( pcb == 0 ? 3 : 5 ) ) begin 
         clk18_count <= 0;
     end else begin
         clk18_count <= clk18_count + 1;
@@ -855,8 +857,10 @@ always @ (posedge clk_sys) begin
         m68k_ipl1_n <= 1 ;
         
         z80_nmi_n   <= 1 ;
+        latch_irq_n <= 1 ;
         flip_dip    <= 0 ;
         m68k_latch  <= 0 ;
+        z80_ram2 <= 0;
         
     end else begin
     
@@ -898,7 +902,11 @@ always @ (posedge clk_sys) begin
                 if ( m68k_latch_cs == 1 ) begin
                     if ( m68k_lds_n == 0 ) begin // LDS 0x0f0009
                         m68k_latch <= m68k_dout[7:0];
-                        z80_nmi_n <= 0 ;  // trigger nmi
+                        if ( pcb == 0 ) begin
+                            z80_nmi_n <= 0 ;  // trigger nmi
+                        end else begin
+                            latch_irq_n <= 0 ;
+                        end
                     end
                 end else if ( m68k_flip_cs == 1 ) begin
                     flip_dip <= m68k_dout[0];
@@ -915,6 +923,9 @@ always @ (posedge clk_sys) begin
             if ( M1_n == 0 ) begin
                 // for interrupt ack
                 z80_nmi_n <= 1 ;
+                if ( IORQ_n == 0 ) begin
+                    latch_irq_n <= 1 ;
+                end
             end
             
             if ( z80_rd_n == 0 ) begin
@@ -927,6 +938,8 @@ always @ (posedge clk_sys) begin
                     z80_din <= z80_rom_data ;
                 end else if ( z80_opl_addr_cs == 1 ) begin
                     z80_din <= opl_dout ;
+                end else if ( z80_ram2_cs == 1 ) begin  
+                    z80_din <= z80_ram2 ;
                 end
             end
            
@@ -942,6 +955,10 @@ always @ (posedge clk_sys) begin
                     opl_addr <= z80_opl_data_cs ; //   opl2 is single bit address
                     opl_wr <= 1;                
                 end
+                
+                if ( z80_ram2_cs == 1 ) begin
+                    z80_ram2 <= z80_dout;
+                end
             end
         end
     end
@@ -952,6 +969,8 @@ reg        opl_wr;
 reg        opl_addr ;
 reg  [7:0] opl_data ;
 wire [7:0] opl_dout ;
+
+reg  [7:0] z80_ram2 ;
 
 // sound ic write enable
 
@@ -999,6 +1018,7 @@ wire    m68k_latch_cs;
 
 wire    z80_rom_cs;
 wire    z80_ram_cs;
+wire    z80_ram2_cs;
 wire    z80_opl_addr_cs;
 wire    z80_opl_data_cs;
 wire    z80_latch_cs;
@@ -1039,6 +1059,7 @@ chip_select cs (
     // z80 
     .z80_rom_cs,
     .z80_ram_cs,
+    .z80_ram2_cs,
     
     .z80_latch_cs,
     
@@ -1142,6 +1163,7 @@ wire z80_wr_n;
 wire z80_rd_n;
 reg  z80_wait_n;
 reg  z80_irq_n;
+reg  latch_irq_n;
 reg  z80_nmi_n;
 
 wire IORQ_n;
@@ -1154,7 +1176,7 @@ T80pa z80 (
     .CEN_p      ( clk_4M ),
     .CEN_n      ( ~clk_4M ),
     .WAIT_n     ( z80_wait_n ), // z80_wait_n
-    .INT_n      ( z80_irq_n ),  
+    .INT_n      ( z80_irq_n & latch_irq_n ),  
     .NMI_n      ( z80_nmi_n ),
     .BUSRQ_n    ( 1'b1 ),
     .RD_n       ( z80_rd_n ),

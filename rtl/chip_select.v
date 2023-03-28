@@ -35,6 +35,7 @@ module chip_select
     // Z80 selects
     output reg   z80_rom_cs,
     output reg   z80_ram_cs,
+    output reg   z80_ram2_cs,
     output reg   z80_latch_cs,
     output reg   z80_opl_addr_cs, // OPL YM3812
     output reg   z80_opl_data_cs
@@ -85,12 +86,13 @@ always @ (*) begin
             m68k_sound_cs    <= m68k_cs( 24'h0e0018, 24'h0e0019 ) & m68k_rw ;
             
             m68k_flip_cs     <= m68k_cs( 24'h0f0000, 24'h0f0001 ) & !m68k_rw ;
-            m68k_latch_cs    <= m68k_cs( 24'h380000, 24'h380001 ) & !m68k_rw ;
+            m68k_latch_cs    <= m68k_cs( 24'h0f0008, 24'h0f0009 ) & !m68k_rw ;            
             
             z80_rom_cs        <= ( MREQ_n == 0 && z80_addr[15:0] <  16'hf000 );
             z80_ram_cs        <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hf000 && z80_addr[15:0] < 16'hf800 );
+            z80_ram2_cs       <= 0;
+
             z80_latch_cs      <= ( MREQ_n == 0 && z80_addr[15:0] == 16'hf800 );
-            
             z80_opl_addr_cs   <= ( z80_addr[7:0] == 8'h00 ) && ( !IORQ_n ) ; 
             z80_opl_data_cs   <= ( z80_addr[7:0] == 8'h20 ) && ( !IORQ_n ) && (!WR_n); 
         end
@@ -99,24 +101,25 @@ always @ (*) begin
             m68k_rom_cs      <= m68k_cs( 24'h000000, 24'h03ffff ) ;
             m68k_ram_cs      <= m68k_cs( 24'h080000, 24'h083fff ) ;
             m68k_spr_cs      <= m68k_cs( 24'h100000, 24'h103fff ) ;
-                        
+
+            m68k_dsw1_cs     <= m68k_cs( 24'h180000, 24'h180001 ) ;
+            m68k_dsw2_cs     <= m68k_cs( 24'h180008, 24'h180009 ) ;
+            
             m68k_p1_cs      <= m68k_cs( 24'h300000, 24'h300001 ) & m68k_rw ;
             m68k_p2_cs      <= m68k_cs( 24'h380000, 24'h380001 ) & m68k_rw ;
             m68k_coin_cs    <= m68k_cs( 24'h340000, 24'h340001 ) & m68k_rw ;
             
-            m68k_dsw1_cs     <= m68k_cs( 24'h180000, 24'h180001 ) ;
-            m68k_dsw2_cs     <= m68k_cs( 24'h180008, 24'h180009 ) ;
-            
-            m68k_sound_cs    <= m68k_cs( 24'h0e0018, 24'h0e0019 ) & m68k_rw ;
-            
-            m68k_flip_cs     <= m68k_cs( 24'h0f0000, 24'h0f0001 ) & !m68k_rw ;
-            m68k_latch_cs    <= m68k_cs( 24'h0f0008, 24'h0f0009 ) & !m68k_rw ;
+            m68k_latch_cs    <= m68k_cs( 24'h380000, 24'h380001 ) & !m68k_rw ;
+
+            m68k_sound_cs    <= 0 ;
+            m68k_flip_cs     <= 0 ;
             
             z80_rom_cs        <= ( MREQ_n == 0 && z80_addr[15:0] <  16'ha000 );
             z80_ram_cs        <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hf000 && z80_addr[15:0] < 16'hf800 );
-            z80_latch_cs      <= ( MREQ_n == 0 && z80_addr[15:0] == 16'hf800 );
-            
-            z80_opl_addr_cs   <= ( MREQ_n == 0 && z80_addr[15:0] == 16'he800 );
+            z80_ram2_cs       <= ( MREQ_n == 0 && z80_addr[15:0] == 16'hfc00 );
+
+            z80_latch_cs      <= ( MREQ_n == 0 && z80_addr[15:0] == 16'he000 ); 
+            z80_opl_addr_cs   <= ( MREQ_n == 0 && z80_addr[15:0] == 16'he800 ); 
             z80_opl_data_cs   <= ( MREQ_n == 0 && z80_addr[15:0] == 16'hec00 ) && (!WR_n); 
         end
     endcase
