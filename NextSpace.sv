@@ -344,7 +344,11 @@ always @ (posedge clk_sys ) begin
         coin <=  ~{ 13'b1, key_service, coin_b, coin_a};
     end else begin
         p1   <=  ~{ 1'b1, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up, 1'b1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
-        coin <=  ~{ 1'b1, key_service, 4'b1, start2, start1, 6'b1, coin_b, coin_a };
+        coin <=  ~{ 1'b1, key_service, key_test, 3'b1, start2, start1, 6'b1, coin_b, coin_a };
+        p2   <=  ~{ 1'b1, p4_buttons[2:0], p4_right, p4_left, p4_down, p4_up, 1'b1, p3_buttons[2:0], p3_right, p3_left, p3_down, p3_up };
+
+        dsw1_m68k <= { 8'hff, sw[0] };
+        dsw2_m68k <= { 8'hff, sw[1] };
   end
 end
 
@@ -374,8 +378,6 @@ wire [2:0]  p4_buttons;
 
 wire start1;
 wire start2;
-wire start3;
-wire start4;
 wire coin_a;
 wire coin_b;
 wire b_pause;
@@ -413,10 +415,22 @@ always @ * begin
     p2_up      <= joy1[3] | key_p2_up;
     p2_buttons <= joy1[6:4] | {key_p2_c, key_p2_b, key_p2_a};
 
-    start1  = joy0[7]  | joy1[7]  | key_start_1p;
-    start2  = joy0[8]  | joy1[8]  | key_start_2p;
-    coin_a  = joy0[9]  | joy1[9]  | key_coin_a;
-    coin_b  = joy0[10] | joy1[10] | key_coin_b;
+    p3_right   <= joy2[0] | key_p3_right;
+    p3_left    <= joy2[1] | key_p3_left;
+    p3_down    <= joy2[2] | key_p3_down;
+    p3_up      <= joy2[3] | key_p3_up;
+    p3_buttons <= joy2[6:4] | {key_p3_b, key_p3_a};
+
+    p4_right   <= joy3[0] | key_p4_right;
+    p4_left    <= joy3[1] | key_p4_left;
+    p4_down    <= joy3[2] | key_p4_down;
+    p4_up      <= joy3[3] | key_p4_up;
+    p4_buttons <= joy3[6:4] | {key_p4_b, key_p4_a};
+
+    start1  = joy0[7]  | joy1[7]  | joy2[8]  | joy3[8]  | key_start_1p;
+    start2  = joy0[8]  | joy1[8]  | joy2[8]  | joy3[8]  | key_start_2p;
+    coin_a  = joy0[9]  | joy1[9]  | joy2[8]  | joy3[8]  | key_coin_a;
+    coin_b  = joy0[10] | joy1[10] | joy2[8]  | joy3[8]  | key_coin_b;
     b_pause = joy0[11] | key_pause;
   end
 end
@@ -428,6 +442,8 @@ wire key_tilt, key_test, key_reset, key_service, key_pause;
 
 wire key_p1_up, key_p1_left, key_p1_down, key_p1_right, key_p1_a, key_p1_b, key_p1_c;
 wire key_p2_up, key_p2_left, key_p2_down, key_p2_right, key_p2_a, key_p2_b, key_p2_c;
+wire key_p3_up, key_p3_left, key_p3_down, key_p3_right, key_p3_a, key_p3_b;
+wire key_p4_up, key_p4_left, key_p4_down, key_p4_right, key_p4_a, key_p4_b;
 
 wire pressed = ps2_key[9];
 
@@ -437,29 +453,44 @@ always @(posedge clk_sys) begin
     old_state <= ps2_key[10];
     if(old_state ^ ps2_key[10]) begin
         casex(ps2_key[8:0])
-            'h016: key_start_1p   <= pressed; // 1
-            'h01e: key_start_2p   <= pressed; // 2
-            'h02E: key_coin_a     <= pressed; // 5
-            'h036: key_coin_b     <= pressed; // 6
-            'h004: key_reset      <= pressed; // f3
-            'h046: key_service    <= pressed; // 9
-            'h04D: key_pause      <= pressed; // p
+            'h016 :  key_start_1p   <= pressed; // 1
+            'h01E :  key_start_2p   <= pressed; // 2
+            'h02E :  key_coin_a     <= pressed; // 5
+            'h036 :  key_coin_b     <= pressed; // 6
+            'h006 :  key_test       <= pressed; // f2
+            'h004 :  key_reset      <= pressed; // f3
+            'h046 :  key_service    <= pressed; // 9
+            'h04D :  key_pause      <= pressed; // p
 
-            'hX75: key_p1_up      <= pressed; // up
-            'hX72: key_p1_down    <= pressed; // down
-            'hX6b: key_p1_left    <= pressed; // left
-            'hX74: key_p1_right   <= pressed; // right
-            'h014: key_p1_a       <= pressed; // lctrl
-            'h011: key_p1_b       <= pressed; // lalt
-            'h029: key_p1_c       <= pressed; // spacebar
+            'h043 :  key_p3_up      <= pressed; // i
+            'h042 :  key_p3_down    <= pressed; // k
+            'h03B :  key_p3_left    <= pressed; // j
+            'h04B :  key_p3_right   <= pressed; // l
+            'h05A :  key_p3_a       <= pressed; // rctrl
+            'h059 :  key_p3_b       <= pressed; // rshift
 
-            'h02d: key_p2_up      <= pressed; // r
-            'h02b: key_p2_down    <= pressed; // f
-            'h023: key_p2_left    <= pressed; // d
-            'h034: key_p2_right   <= pressed; // g
-            'h01c: key_p2_a       <= pressed; // a
-            'h01b: key_p2_b       <= pressed; // s
-            'h015: key_p2_c       <= pressed; // q
+            'h075 :  key_p4_up      <= pressed; // 8 (numeric pad)
+            'h072 :  key_p4_down    <= pressed; // 2 (numeric pad)
+            'h06B :  key_p4_left    <= pressed; // 4 (numeric pad)
+            'h074 :  key_p4_right   <= pressed; // 6 (numeric pad)
+            'h070 :  key_p4_a       <= pressed; // 0 (numeric pad)
+            'h071 :  key_p4_b       <= pressed; // . (numeric pad)
+
+            'hX75 :  key_p1_up      <= pressed; // up
+            'hX72 :  key_p1_down    <= pressed; // down
+            'hX6B :  key_p1_left    <= pressed; // left
+            'hX74 :  key_p1_right   <= pressed; // right
+            'h014 :  key_p1_a       <= pressed; // lctrl
+            'h011 :  key_p1_b       <= pressed; // lalt
+            'h029 :  key_p1_c       <= pressed; // spacebar
+
+            'h02D :  key_p2_up      <= pressed; // r
+            'h02B :  key_p2_down    <= pressed; // f
+            'h023 :  key_p2_left    <= pressed; // d
+            'h034 :  key_p2_right   <= pressed; // g
+            'h01C :  key_p2_a       <= pressed; // a
+            'h01B :  key_p2_b       <= pressed; // s
+            'h015 :  key_p2_c       <= pressed; // q
 
         endcase
     end
@@ -494,7 +525,7 @@ always @ (posedge clk_sys) begin
     clk_4M <= ( clk4_count == 0 );
     if ( clk4_count == 17 ) begin 
         clk4_count <= 0;
-    end else begin
+    end else if ( pause_cpu == 0 ) begin
         clk4_count <= clk4_count + 1;
     end
     
@@ -509,7 +540,7 @@ always @ (posedge clk_sys) begin
     clk_18M <= ( clk18_count == 0 );
     if ( clk18_count == 3 ) begin 
         clk18_count <= 0;
-    end else begin
+    end else if ( pause_cpu == 0 ) begin
         clk18_count <= clk18_count + 1;
     end
 end
