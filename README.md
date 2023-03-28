@@ -29,7 +29,6 @@ The intent is for this core to be a 1:1 playable implementation of The Next Spac
 # Known Issues / Tasks
 
 - Verify video timings for A8004-1 by measuring PCB [Task]  
-- Map P3B1 to R-Ctrl on keyboard input [Issue]  
 
 # PCB Check List
 
@@ -120,7 +119,7 @@ INPUT 87 | 68K-96-1 (PM) | [**ALPHA-INPUT 87**](https://github.com/va7deo/alpha6
 
 |Player 3|Player 4|
 |--|--|
-|<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Up</td><td>I</td></tr><tr><td>P3 Down</td><td>K</td></tr><tr><td>P3 Left</td><td>J</td></tr><tr><td>P3 Right</td><td>L</td></tr><tr><td>P3 Bttn 1</td><td>Enter</td></tr><tr><td>P3 Bttn 2</td><td>R-Shift</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Up</td><td>8 (Numeric Pad)</td></tr><tr><td>P4 Down</td><td>2 (Numeric Pad)</td></tr><tr><td>P4 Left</td><td>4 (Numeric Pad)</td></tr><tr><td>P4 Right</td><td>6 (Numeric Pad)</td></tr><tr><td>P4 Bttn 1</td><td>0 (Numeric Pad)</td></tr><tr><td>P4 Bttn 2</td><td>. (Numeric Pad)</td></tr> </table>|
+|<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Up</td><td>I</td></tr><tr><td>P3 Down</td><td>K</td></tr><tr><td>P3 Left</td><td>J</td></tr><tr><td>P3 Right</td><td>L</td></tr><tr><td>P3 Bttn 1</td><td>R-Ctrl</td></tr><tr><td>P3 Bttn 2</td><td>R-Shift</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Up</td><td>8 (Numeric Pad)</td></tr><tr><td>P4 Down</td><td>2 (Numeric Pad)</td></tr><tr><td>P4 Left</td><td>4 (Numeric Pad)</td></tr><tr><td>P4 Right</td><td>6 (Numeric Pad)</td></tr><tr><td>P4 Bttn 1</td><td>0 (Numeric Pad)</td></tr><tr><td>P4 Bttn 2</td><td>. (Numeric Pad)</td></tr> </table>|
 
 # Support
 
