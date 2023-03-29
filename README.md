@@ -15,7 +15,7 @@ The intent is for this core to be a 1:1 playable implementation of The Next Spac
 | Title | PCB<br>Number | Status  | Released |
 |-------|---------------|---------|----------|
 | [**The Next Space**](https://en.wikipedia.org/wiki/Gang_Wars_(video_game)) | A8004-1 (TNS)      | Implemented | **Yes** |
-| [**Paddle Mania**](https://snk.fandom.com/wiki/Super_Champion_Baseball)    | ALPHA68K-96-I (PM) | Implemented | **Yes** |
+| [**Paddle Mania**](https://snk.fandom.com/wiki/Super_Champion_Baseball)    | ALPHA68K-96-I (PM) | Implemented | **No**  |
 
 ## External Modules
 
@@ -40,12 +40,12 @@ H-Sync      | V-Sync      | Source                  | PCB<br>Number  |
 
 ### Crystal Oscillators
 
-Location        | PCB<br>Number | Freq (MHz) | Use              |
-|---------------|---------------|------------|------------------|
-24MHz           | A8004-1 (TNS) | 24.000     | Pixel Clock, Z80 |
-4MHz            | A8004-1 (TNS) | 4.000      | YM3812           |
-18MHz           | A8004-1 (TNS) | 18.000     | M68000           |
-24MHz           | 68K-96-1 (PM) | 24.000     | All Components   |
+Location        | PCB<br>Number | Freq (MHz) | Use                 |
+|---------------|---------------|------------|---------------------|
+24MHz           | A8004-1 (TNS) | 24.000     | Video / Pixel Clock |
+4MHz            | A8004-1 (TNS) | 4.000      | Z80 / YM3812        |
+18MHz           | A8004-1 (TNS) | 18.000     | M68000              |
+24MHz           | 68K-96-1 (PM) | 24.000     | All Components      |
 
 **Pixel clock:** 6.00 MHz
 
@@ -94,7 +94,7 @@ INPUT 87 | 68K-96-1 (PM) | [**ALPHA-INPUT 87**](https://github.com/va7deo/alpha6
 
 - The service menu is accessed by toggling a dipswitch for supported titles. Paddle Mania has a test switch that can be toggled with F2, it does not enter the test menu and toggling the dipswitch is required.
 
-- Paddle Mania supports co-op two player, two player versus the CPU opponents or a third and up to four player versus.
+- Paddle Mania supports co-op two player, two player versus the CPU opponents or a third and up to four player versus. 1P Start is referenced as the "A" button, 2P Start is "B" button. These are referenced in Paddle Mania's test menu.
 
 <br>
 
@@ -119,7 +119,7 @@ INPUT 87 | 68K-96-1 (PM) | [**ALPHA-INPUT 87**](https://github.com/va7deo/alpha6
 
 |Player 3|Player 4|
 |--|--|
-|<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Up</td><td>I</td></tr><tr><td>P3 Down</td><td>K</td></tr><tr><td>P3 Left</td><td>J</td></tr><tr><td>P3 Right</td><td>L</td></tr><tr><td>P3 Bttn 1</td><td>R-Ctrl</td></tr><tr><td>P3 Bttn 2</td><td>R-Shift</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Up</td><td>8 (Numeric Pad)</td></tr><tr><td>P4 Down</td><td>2 (Numeric Pad)</td></tr><tr><td>P4 Left</td><td>4 (Numeric Pad)</td></tr><tr><td>P4 Right</td><td>6 (Numeric Pad)</td></tr><tr><td>P4 Bttn 1</td><td>0 (Numeric Pad)</td></tr><tr><td>P4 Bttn 2</td><td>. (Numeric Pad)</td></tr> </table>|
+|<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Up</td><td>I</td></tr><tr><td>P3 Down</td><td>K</td></tr><tr><td>P3 Left</td><td>J</td></tr><tr><td>P3 Right</td><td>L</td></tr><tr><td>P3 Bttn 1</td><td>R-Ctrl</td></tr><tr><td>P3 Bttn 2</td><td>R-Shift</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Up</td><td>8 (Num. Pad)</td></tr><tr><td>P4 Down</td><td>2 (Num. Pad)</td></tr><tr><td>P4 Left</td><td>4 (Num. Pad)</td></tr><tr><td>P4 Right</td><td>6 (Num. Pad)</td></tr><tr><td>P4 Bttn 1</td><td>0 (Num. Pad)</td></tr><tr><td>P4 Bttn 2</td><td>. (Num. Pad)</td></tr> </table>|
 
 # Support
 
