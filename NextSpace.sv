@@ -341,11 +341,11 @@ always @ (posedge clk_sys ) begin
         dsw1_m68k <= { 8'hff, sw[0] };
         dsw2_m68k <= { 8'hff, sw[1] };
 
-        coin <=  ~{ 13'b1, key_service, coin_b, coin_a};
+        coin <=  ~{ 13'b0, key_service, coin_b, coin_a};
     end else begin
-        p1   <=  ~{ 1'b1, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up, 1'b1, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
-        coin <=  ~{ 1'b1, key_service, key_test, 3'b1, start2, start1, 6'b1, coin_b, coin_a };
-        p2   <=  ~{ 1'b1, p4_buttons[2:0], p4_right, p4_left, p4_down, p4_up, 1'b1, p3_buttons[2:0], p3_right, p3_left, p3_down, p3_up };
+        p1   <=  ~{ 1'b0, p2_buttons[2:0], p2_right, p2_left, p2_down, p2_up, 1'b0, p1_buttons[2:0], p1_right, p1_left, p1_down, p1_up };
+        coin <=  ~{ 1'b0, key_service, key_test, 3'b0, start2, start1, 6'b0, coin_b, coin_a };
+        p2   <=  ~{ 1'b0, p4_buttons[2:0], p4_right, p4_left, p4_down, p4_up, 1'b0, p3_buttons[2:0], p3_right, p3_left, p3_down, p3_up };
 
         dsw1_m68k <= { 8'hff, sw[0] };
         dsw2_m68k <= { 8'hff, sw[1] };
@@ -403,36 +403,36 @@ always @ * begin
         coin_b  = joy0[10] | joy1[10] | key_coin_b;
         b_pause = joy0[11] | key_pause;
     end else begin
-    p1_right   <= joy0[0] | key_p1_right;
-    p1_left    <= joy0[1] | key_p1_left;
-    p1_down    <= joy0[2] | key_p1_down;
-    p1_up      <= joy0[3] | key_p1_up;
-    p1_buttons <= joy0[6:4] | {key_p1_c, key_p1_b, key_p1_a};
+        p1_right   <= joy0[0] | key_p1_right;
+        p1_left    <= joy0[1] | key_p1_left;
+        p1_down    <= joy0[2] | key_p1_down;
+        p1_up      <= joy0[3] | key_p1_up;
+        p1_buttons <= joy0[6:4] | {key_p1_c, key_p1_b, key_p1_a};
 
-    p2_right   <= joy1[0] | key_p2_right;
-    p2_left    <= joy1[1] | key_p2_left;
-    p2_down    <= joy1[2] | key_p2_down;
-    p2_up      <= joy1[3] | key_p2_up;
-    p2_buttons <= joy1[6:4] | {key_p2_c, key_p2_b, key_p2_a};
+        p2_right   <= joy1[0] | key_p2_right;
+        p2_left    <= joy1[1] | key_p2_left;
+        p2_down    <= joy1[2] | key_p2_down;
+        p2_up      <= joy1[3] | key_p2_up;
+        p2_buttons <= joy1[6:4] | {key_p2_c, key_p2_b, key_p2_a};
 
-    p3_right   <= joy2[0] | key_p3_right;
-    p3_left    <= joy2[1] | key_p3_left;
-    p3_down    <= joy2[2] | key_p3_down;
-    p3_up      <= joy2[3] | key_p3_up;
-    p3_buttons <= joy2[6:4] | {key_p3_b, key_p3_a};
+        p3_right   <= joy2[0] | key_p3_right;
+        p3_left    <= joy2[1] | key_p3_left;
+        p3_down    <= joy2[2] | key_p3_down;
+        p3_up      <= joy2[3] | key_p3_up;
+        p3_buttons <= joy2[6:4] | {key_p3_b, key_p3_a};
 
-    p4_right   <= joy3[0] | key_p4_right;
-    p4_left    <= joy3[1] | key_p4_left;
-    p4_down    <= joy3[2] | key_p4_down;
-    p4_up      <= joy3[3] | key_p4_up;
-    p4_buttons <= joy3[6:4] | {key_p4_b, key_p4_a};
+        p4_right   <= joy3[0] | key_p4_right;
+        p4_left    <= joy3[1] | key_p4_left;
+        p4_down    <= joy3[2] | key_p4_down;
+        p4_up      <= joy3[3] | key_p4_up;
+        p4_buttons <= joy3[6:4] | {key_p4_b, key_p4_a};
 
-    start1  = joy0[7]  | joy1[7]  | joy2[8]  | joy3[8]  | key_start_1p;
-    start2  = joy0[8]  | joy1[8]  | joy2[8]  | joy3[8]  | key_start_2p;
-    coin_a  = joy0[9]  | joy1[9]  | joy2[8]  | joy3[8]  | key_coin_a;
-    coin_b  = joy0[10] | joy1[10] | joy2[8]  | joy3[8]  | key_coin_b;
-    b_pause = joy0[11] | key_pause;
-  end
+        start1  = joy0[7]  | joy1[7]  | joy2[8]  | joy3[8]  | key_start_1p;
+        start2  = joy0[8]  | joy1[8]  | joy2[8]  | joy3[8]  | key_start_2p;
+        coin_a  = joy0[9]  | joy1[9]  | joy2[8]  | joy3[8]  | key_coin_a;
+        coin_b  = joy0[10] | joy1[10] | joy2[8]  | joy3[8]  | key_coin_b;
+        b_pause = joy0[11] | key_pause;
+    end
 end
 
 // Keyboard handler
@@ -451,8 +451,8 @@ always @(posedge clk_sys) begin
     reg old_state;
 
     old_state <= ps2_key[10];
-    if(old_state ^ ps2_key[10]) begin
-        casex(ps2_key[8:0])
+    if ( old_state ^ ps2_key[10] ) begin
+        casex ( ps2_key[8:0] )
             'h016 :  key_start_1p   <= pressed; // 1
             'h01E :  key_start_2p   <= pressed; // 2
             'h02E :  key_coin_a     <= pressed; // 5
@@ -1207,7 +1207,7 @@ T80pa z80 (
     .CEN_p      ( clk_4M ),
     .CEN_n      ( ~clk_4M ),
     .WAIT_n     ( z80_wait_n ), // z80_wait_n
-    .INT_n      ( z80_irq_n & latch_irq_n ),  
+    .INT_n      ( z80_irq_n & latch_irq_n ), // ( ( pcb == 0 ) ? z80_irq_n : latch_irq_n ),  
     .NMI_n      ( z80_nmi_n ),
     .BUSRQ_n    ( 1'b1 ),
     .RD_n       ( z80_rd_n ),
