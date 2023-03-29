@@ -466,7 +466,7 @@ always @(posedge clk_sys) begin
             'h042 :  key_p3_down    <= pressed; // k
             'h03B :  key_p3_left    <= pressed; // j
             'h04B :  key_p3_right   <= pressed; // l
-            'h05A :  key_p3_a       <= pressed; // rctrl
+            'h114 :  key_p3_a       <= pressed; // rctrl
             'h059 :  key_p3_b       <= pressed; // rshift
 
             'h075 :  key_p4_up      <= pressed; // 8 (numeric pad)
@@ -476,10 +476,10 @@ always @(posedge clk_sys) begin
             'h070 :  key_p4_a       <= pressed; // 0 (numeric pad)
             'h071 :  key_p4_b       <= pressed; // . (numeric pad)
 
-            'hX75 :  key_p1_up      <= pressed; // up
-            'hX72 :  key_p1_down    <= pressed; // down
-            'hX6B :  key_p1_left    <= pressed; // left
-            'hX74 :  key_p1_right   <= pressed; // right
+            'h175 :  key_p1_up      <= pressed; // up
+            'h172 :  key_p1_down    <= pressed; // down
+            'h16B :  key_p1_left    <= pressed; // left
+            'h174 :  key_p1_right   <= pressed; // right
             'h014 :  key_p1_a       <= pressed; // lctrl
             'h011 :  key_p1_b       <= pressed; // lalt
             'h029 :  key_p1_c       <= pressed; // spacebar
