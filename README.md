@@ -15,7 +15,7 @@ The intent is for this core to be a 1:1 playable implementation of The Next Spac
 | Title | PCB<br>Number | Status  | Released |
 |-------|---------------|---------|----------|
 | [**The Next Space**](https://en.wikipedia.org/wiki/Gang_Wars_(video_game)) | A8004-1 (TNS)      | Implemented | **Yes** |
-| [**Paddle Mania**](https://snk.fandom.com/wiki/Super_Champion_Baseball)    | ALPHA68K-96-I (PM) | Implemented | **No**  |
+| [**Paddle Mania**](https://snk.fandom.com/wiki/Super_Champion_Baseball)    | ALPHA68K-96-I (PM) | Implemented | **Yes** |
 
 ## External Modules
 
@@ -117,9 +117,9 @@ INPUT 87 | 68K-96-1 (PM) | [**ALPHA-INPUT 87**](https://github.com/va7deo/alpha6
 |--|--|
 |<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P1 Up</td><td>Up</td></tr><tr><td>P1 Down</td><td>Down</td></tr><tr><td>P1 Left</td><td>Left</td></tr><tr><td>P1 Right</td><td>Right</td></tr><tr><td>P1 Bttn 1</td><td>L-Ctrl</td></tr><tr><td>P1 Bttn 2</td><td>L-Alt</td></tr><tr><td>P1 Bttn 3</td><td>Space</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P2 Up</td><td>R</td></tr><tr><td>P2 Down</td><td>F</td></tr><tr><td>P2 Left</td><td>D</td></tr><tr><td>P2 Right</td><td>G</td></tr><tr><td>P2 Bttn 1</td><td>A</td></tr><tr><td>P2 Bttn 2</td><td>S</td></tr><tr><td>P2 Bttn 3</td><td>Q</td></tr> </table>|
 
-|Player 3|Player 4|
+|Player 3|Player 4<br>(Numeric Keys)|
 |--|--|
-|<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Up</td><td>I</td></tr><tr><td>P3 Down</td><td>K</td></tr><tr><td>P3 Left</td><td>J</td></tr><tr><td>P3 Right</td><td>L</td></tr><tr><td>P3 Bttn 1</td><td>R-Ctrl</td></tr><tr><td>P3 Bttn 2</td><td>R-Shift</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Up</td><td>8 (Num. Pad)</td></tr><tr><td>P4 Down</td><td>2 (Num. Pad)</td></tr><tr><td>P4 Left</td><td>4 (Num. Pad)</td></tr><tr><td>P4 Right</td><td>6 (Num. Pad)</td></tr><tr><td>P4 Bttn 1</td><td>0 (Num. Pad)</td></tr><tr><td>P4 Bttn 2</td><td>. (Num. Pad)</td></tr> </table>|
+|<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Up</td><td>I</td></tr><tr><td>P3 Down</td><td>K</td></tr><tr><td>P3 Left</td><td>J</td></tr><tr><td>P3 Right</td><td>L</td></tr><tr><td>P3 Bttn 1</td><td>R-Ctrl</td></tr><tr><td>P3 Bttn 2</td><td>R-Shift</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Up</td><td>8</td></tr><tr><td>P4 Down</td><td>2</td></tr><tr><td>P4 Left</td><td>4</td></tr><tr><td>P4 Right</td><td>6</td></tr><tr><td>P4 Bttn 1</td><td>0</td></tr><tr><td>P4 Bttn 2</td><td>.</td></tr> </table>|
 
 # Support
 
