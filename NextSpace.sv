@@ -891,7 +891,7 @@ always @ (posedge clk_sys) begin
         latch_irq_n <= 1 ;
         flip_dip    <= 0 ;
         m68k_latch  <= 0 ;
-        z80_ram2 <= 0;
+//        z80_ram2 <= 0;
         
     end else begin
     
@@ -970,7 +970,7 @@ always @ (posedge clk_sys) begin
                 end else if ( z80_opl_addr_cs == 1 ) begin
                     z80_din <= opl_dout ;
                 end else if ( z80_ram2_cs == 1 ) begin  
-                    z80_din <= z80_ram2 ;
+                    z80_din <= z80_ram2_data ;
                 end
             end
            
@@ -987,9 +987,9 @@ always @ (posedge clk_sys) begin
                     opl_wr <= 1;                
                 end
                 
-                if ( z80_ram2_cs == 1 ) begin
-                    z80_ram2 <= z80_dout;
-                end
+//                if ( z80_ram2_cs == 1 ) begin
+//                    z80_ram2 <= z80_dout;
+//                end
             end
         end
     end
@@ -1001,7 +1001,7 @@ reg        opl_addr ;
 reg  [7:0] opl_data ;
 wire [7:0] opl_dout ;
 
-reg  [7:0] z80_ram2 ;
+//reg  [7:0] z80_ram2 ;
 
 // sound ic write enable
 
@@ -1027,7 +1027,7 @@ jtopl #(.OPL_TYPE(2)) opl
     .cen(1'b1),
     .din(opl_data),
     .addr(opl_addr),
-    .cs_n(~( z80_opl_addr_cs | z80_opl_data_cs )),
+    .cs_n(0),
     .wr_n(~opl_wr),
     .dout(opl_dout),
     .irq_n( z80_irq_n ),  
@@ -1185,6 +1185,7 @@ fx68k fx68k (
 // z80 audio 
 wire    [7:0] z80_rom_data;
 wire    [7:0] z80_ram_data;
+wire    [7:0] z80_ram2_data;
 
 wire   [15:0] z80_addr;
 reg     [7:0] z80_din;
@@ -1260,7 +1261,7 @@ dual_port_ram #(.LEN(8192)) ram8kx8_H (
     .address_a ( m68k_a[13:1] ),
     .wren_a ( !m68k_rw & m68k_ram_cs & !m68k_uds_n ),
     .data_a ( m68k_dout[15:8]  ),
-    .q_a (  m68k_ram_dout[15:8] ),
+    .q_a (  m68k_ram_dout[15:8] )
     
 //    .clock_b ( clk_sys ),
 //    .address_b ( mcu_addr ),  
@@ -1276,7 +1277,7 @@ dual_port_ram #(.LEN(8192)) ram8kx8_L (
     .address_a ( m68k_a[13:1] ),
     .wren_a ( !m68k_rw & m68k_ram_cs & !m68k_lds_n ),
     .data_a ( m68k_dout[7:0]  ),
-    .q_a ( m68k_ram_dout[7:0] ),
+    .q_a ( m68k_ram_dout[7:0] )
     
 //    .clock_b ( clk_sys ),
 //    .address_b ( mcu_addr ),  
@@ -1430,6 +1431,14 @@ dual_port_ram #(.LEN(2048)) z80_ram (
     .data_b ( z80_dout ),
     .q_b ( z80_ram_data )
     );
+    
+dual_port_ram #(.LEN(1024)) z80_ram2 (
+    .clock_b ( clk_4M ), 
+    .address_b ( z80_addr[9:0] ),
+    .wren_b ( z80_ram2_cs & ~z80_wr_n ),
+    .data_b ( z80_dout ),
+    .q_b ( z80_ram2_data )
+    );    
     
 reg   [9:0]  line_buf_addr_r ; 
 

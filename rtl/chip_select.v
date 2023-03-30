@@ -116,7 +116,7 @@ always @ (*) begin
             
             z80_rom_cs        <= ( MREQ_n == 0 && z80_addr[15:0] <  16'ha000 );
             z80_ram_cs        <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hf000 && z80_addr[15:0] < 16'hf800 );
-            z80_ram2_cs       <= ( MREQ_n == 0 && z80_addr[15:0] == 16'hfc00 );
+            z80_ram2_cs       <= ( MREQ_n == 0 && z80_addr[15:0] >= 16'hfc00 );
 
             z80_latch_cs      <= ( MREQ_n == 0 && z80_addr[15:0] == 16'he000 ); 
             z80_opl_addr_cs   <= ( MREQ_n == 0 && z80_addr[15:0] == 16'he800 ); 
