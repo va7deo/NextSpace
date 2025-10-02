@@ -1,7 +1,7 @@
 
 # SNK68000 The Next Space FPGA Implementation
 
-FPGA compatible core of SNK's The Next Space (A8004 based) arcade hardware for [**MiSTerFPGA**](https://github.com/MiSTer-devel/Main_MiSTer/wiki) written by [**Darren Olafson**](https://twitter.com/Darren__O) and verified against and authentic The Next Space (A8004-1) PCB purchased by [**atrac17**](https://github.com/atrac17).
+FPGA compatible core of SNK's The Next Space (A8004 based) arcade hardware for [**MiSTerFPGA**](https://github.com/MiSTer-devel/Main_MiSTer/wiki) written by **Erin Olafson** and verified against and authentic The Next Space (A8004-1) PCB purchased by [**atrac17**](https://github.com/atrac17).
 
 The intent is for this core to be a 1:1 playable implementation of The Next Space (A8004-1) arcade hardware. Currently in **beta state**, this core is in active development with assistance from [**atrac17**](https://github.com/atrac17).
 
@@ -121,10 +121,3 @@ INPUT 87 | 68K-96-1 (PM) | [**ALPHA-INPUT 87**](https://github.com/va7deo/alpha6
 |--|--|
 |<table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P3 Up</td><td>I</td></tr><tr><td>P3 Down</td><td>K</td></tr><tr><td>P3 Left</td><td>J</td></tr><tr><td>P3 Right</td><td>L</td></tr><tr><td>P3 Bttn 1</td><td>R-Ctrl</td></tr><tr><td>P3 Bttn 2</td><td>R-Shift</td></tr> </table> | <table> <tr><th>Functions</th><th>Keymap</th></tr><tr><td>P4 Up</td><td>8</td></tr><tr><td>P4 Down</td><td>2</td></tr><tr><td>P4 Left</td><td>4</td></tr><tr><td>P4 Right</td><td>6</td></tr><tr><td>P4 Bttn 1</td><td>0</td></tr><tr><td>P4 Bttn 2</td><td>.</td></tr> </table>|
 
-# Support
-
-Please consider showing support for this and future projects via [**Darren's Ko-fi**](https://ko-fi.com/darreno) and [**atrac17's Patreon**](https://www.patreon.com/atrac17). While it isn't necessary, it's greatly appreciated.
-
-# Licensing
-
-Contact the author for special licensing needs. Otherwise follow the GPLv2 license attached.
